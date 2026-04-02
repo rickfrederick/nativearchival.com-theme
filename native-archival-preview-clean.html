@@ -1,0 +1,2773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Native Archival — Theme Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   CSS CUSTOM PROPERTIES
+   ============================================================ */
+:root {
+  --na-charcoal: #1a1a1a;
+  --na-charcoal-light: #2d2d2d;
+  --na-ivory: #f5f0e8;
+  --na-ivory-dark: #ede8dc;
+  --na-kraft: #b8956a;
+  --na-kraft-light: #c9a87a;
+  --na-silver: #8a9099;
+  --na-white-10: rgba(255,255,255,0.1);
+  --na-white-08: rgba(255,255,255,0.08);
+  --na-white-20: rgba(255,255,255,0.2);
+  --na-font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --na-font-display: 'Instrument Serif', Georgia, serif;
+  --na-max-width: 1280px;
+  --na-tracking-wide: 0.1em;
+  --na-tracking-widest: 0.15em;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body { background: var(--na-ivory); color: var(--na-charcoal); font-family: var(--na-font-sans); font-size: 16px; line-height: 1.6; }
+img { max-width: 100%; height: auto; display: block; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+/* Container */
+.na-container { max-width: var(--na-max-width); margin: 0 auto; padding: 0 1rem; }
+@media (min-width: 640px) { .na-container { padding: 0 1.5rem; } }
+@media (min-width: 1024px) { .na-container { padding: 0 2rem; } }
+
+/* Kraft line */
+.na-kraft-line { display: block; width: 2rem; height: 1px; background: var(--na-kraft); border: none; }
+.na-kraft-line--center { margin-left: auto; margin-right: auto; }
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.na-header { background: var(--na-charcoal); color: var(--na-ivory); position: relative; z-index: 50; }
+.na-header__inner { display: flex; align-items: center; justify-content: space-between; height: 4rem; }
+.na-header__brand { display: flex; flex-direction: column; justify-content: center; gap: 0.25rem; }
+.na-header__logo { font-size: 1.125rem; font-weight: 300; letter-spacing: var(--na-tracking-widest); text-transform: uppercase; color: var(--na-ivory); line-height: 1; }
+.na-header__social { display: flex; align-items: center; gap: 0.625rem; }
+.na-header__social a { display: flex; align-items: center; color: var(--na-silver); transition: color 0.2s; }
+.na-header__social a:hover { color: var(--na-ivory); }
+.na-header__social svg { width: 0.875rem; height: 0.875rem; }
+.na-header__nav { display: none; align-items: center; gap: 2rem; }
+@media (min-width: 768px) { .na-header__nav { display: flex; } }
+.na-header__nav a { font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); font-weight: 500; color: var(--na-silver); transition: color 0.2s; }
+.na-header__nav a:hover { color: var(--na-ivory); }
+.na-header__actions { display: flex; align-items: center; gap: 1.25rem; }
+.na-header__login { display: flex; align-items: center; gap: 0.5rem; color: var(--na-silver); transition: color 0.2s; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); font-weight: 500; }
+.na-header__login:hover { color: var(--na-ivory); }
+.na-header__login svg { width: 1.25rem; height: 1.25rem; }
+.na-header__login-text { display: none; }
+@media (min-width: 768px) { .na-header__login-text { display: inline; } }
+.na-header__cart { position: relative; color: var(--na-ivory); display: flex; align-items: center; }
+.na-header__cart svg { width: 1.5rem; height: 1.5rem; }
+.na-header__cart-count { position: absolute; top: -0.5rem; right: -0.5rem; width: 1rem; height: 1rem; border-radius: 50%; background: var(--na-kraft); color: var(--na-ivory); font-size: 0.625rem; font-weight: 600; display: flex; align-items: center; justify-content: center; }
+
+/* ============================================================
+   LOGIN / REGISTER PAGE
+   ============================================================ */
+.na-account-page { max-width: var(--na-max-width); margin: 0 auto; padding: 4rem 1rem; display: grid; grid-template-columns: 1fr; gap: 3rem; }
+@media (min-width: 768px) { .na-account-page { grid-template-columns: 1fr 1fr; gap: 4rem; } }
+.na-account-panel__title { font-size: 1.125rem; font-weight: 300; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-charcoal); margin-bottom: 2rem; }
+.na-account-panel--register { border: 1px solid var(--na-ivory-dark); padding: 2rem; }
+@media (min-width: 768px) { .na-account-panel--register { padding: 2.5rem; } }
+.na-login__form { display: flex; flex-direction: column; gap: 1.25rem; }
+.na-login__field label { display: block; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); font-weight: 500; color: var(--na-charcoal); margin-bottom: 0.5rem; }
+.na-login__field label .na-required { color: var(--na-kraft); }
+.na-login__field input { width: 100%; padding: 0.75rem 1rem; font-size: 0.875rem; border: 1px solid var(--na-ivory-dark); background: transparent; color: var(--na-charcoal); outline: none; font-family: var(--na-font-sans); transition: border-color 0.2s; }
+.na-login__field input:focus { border-color: var(--na-kraft); }
+.na-show-password { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver); cursor: pointer; background: none; border: 1px solid var(--na-ivory-dark); padding: 0.375rem 0.75rem; margin-top: 0.5rem; font-family: var(--na-font-sans); transition: all 0.2s; }
+.na-show-password:hover { color: var(--na-charcoal); border-color: var(--na-charcoal); }
+.na-recaptcha { background: #f9f9f9; border: 1px solid #d3d3d3; padding: 0.875rem 1rem; display: flex; align-items: center; gap: 0.75rem; margin-top: 0.25rem; max-width: 20rem; }
+.na-recaptcha__checkbox { width: 1.5rem; height: 1.5rem; border: 2px solid #c1c1c1; border-radius: 2px; flex-shrink: 0; cursor: pointer; background: #fff; appearance: none; -webkit-appearance: none; position: relative; }
+.na-recaptcha__checkbox:checked { background: var(--na-kraft); border-color: var(--na-kraft); }
+.na-recaptcha__checkbox:checked::after { content: '\2713'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); color: #fff; font-size: 0.875rem; font-weight: 700; }
+.na-recaptcha__label { font-size: 0.8125rem; color: #555; }
+.na-recaptcha__logo { margin-left: auto; display: flex; flex-direction: column; align-items: center; gap: 0.125rem; }
+.na-recaptcha__logo-img { font-size: 1.25rem; opacity: 0.5; }
+.na-recaptcha__logo-text { font-size: 0.5rem; color: #999; text-transform: uppercase; letter-spacing: 0.05em; }
+.na-recaptcha__logo-links { font-size: 0.45rem; color: #999; }
+.na-login__submit { width: auto; display: inline-block; padding: 0.75rem 2rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); font-weight: 500; background: var(--na-kraft); color: var(--na-ivory); border: none; cursor: pointer; transition: background 0.2s; font-family: var(--na-font-sans); }
+.na-login__submit:hover { background: var(--na-kraft-light); }
+.na-login__row { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
+.na-login__remember { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; color: var(--na-silver); cursor: pointer; }
+.na-login__remember input { accent-color: var(--na-kraft); }
+.na-login__forgot { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-kraft); display: block; margin-top: 0.75rem; }
+.na-login__forgot:hover { color: var(--na-kraft-light); }
+.na-register-note { font-size: 0.75rem; color: var(--na-silver); line-height: 1.6; margin-top: 0.5rem; }
+.na-newsletter-check { display: flex; align-items: center; gap: 0.5rem; font-size: 0.75rem; color: var(--na-charcoal); cursor: pointer; }
+.na-newsletter-check input { accent-color: var(--na-kraft); }
+.na-privacy-text { font-size: 0.6875rem; color: var(--na-silver); line-height: 1.6; }
+
+/* Blog post body */
+.na-blogpost-body { font-size: 1rem; line-height: 1.8; color: var(--na-charcoal); }
+.na-blogpost-body h2 { font-size: 1.25rem; font-weight: 300; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); margin: 2.5rem 0 1rem; }
+.na-blogpost-body h3 { font-size: 1rem; font-weight: 500; text-transform: uppercase; letter-spacing: var(--na-tracking-wide); margin: 2rem 0 0.75rem; }
+.na-blogpost-body p { margin-bottom: 1.5rem; }
+.na-blogpost-body strong { font-weight: 600; }
+.na-blogpost-body a { color: var(--na-kraft); text-decoration: underline; text-underline-offset: 3px; }
+.na-blogpost-body blockquote { border-left: 2px solid var(--na-kraft); padding-left: 1.5rem; margin: 2rem 0; font-style: italic; color: var(--na-silver); font-size: 1.0625rem; }
+.na-blogpost-body ul, .na-blogpost-body ol { padding-left: 1.5rem; margin-bottom: 1.5rem; }
+.na-blogpost-body li { margin-bottom: 0.5rem; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.na-hero { background: var(--na-charcoal); position: relative; min-height: 85vh; display: flex; align-items: center; }
+.na-hero__inner { display: grid; grid-template-columns: 1fr; gap: 0; width: 100%; align-items: center; min-height: 85vh; }
+@media (min-width: 768px) { .na-hero__inner { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1024px) { .na-hero__inner { grid-template-columns: 55% 45%; } }
+.na-hero__content { position: relative; padding: 6rem 1.5rem; max-width: 42rem; }
+@media (min-width: 1024px) { .na-hero__content { padding: 6rem 4rem 6rem 2rem; margin-left: auto; } }
+.na-hero h1 { font-family: var(--na-font-display); font-size: 3rem; font-weight: 400; line-height: 1.1; color: var(--na-ivory); margin-bottom: 1.5rem; }
+@media (min-width: 640px) { .na-hero h1 { font-size: 3.75rem; } }
+@media (min-width: 1024px) { .na-hero h1 { font-size: 4.5rem; } }
+.na-hero__subtitle { font-size: 0.875rem; letter-spacing: var(--na-tracking-widest); text-transform: uppercase; color: var(--na-silver); margin-bottom: 2.5rem; }
+.na-hero__actions { display: flex; flex-wrap: wrap; gap: 1rem; }
+
+/* Machinery panel */
+.na-hero__machinery { position: relative; overflow: hidden; display: none; min-height: 100%; background: var(--na-charcoal); }
+@media (min-width: 768px) { .na-hero__machinery { display: flex; align-items: center; justify-content: center; } }
+.na-hero__photo { position: absolute; inset: 0; overflow: hidden; opacity: 0.85; animation: heroPhotoFade 4s ease-in-out 1.5s forwards; }
+.na-hero__video { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(100%) contrast(1.1); }
+@keyframes heroPhotoFade { 0% { opacity: 0.85; } 100% { opacity: 0; } }
+.na-hero__machinery-divider { position: absolute; left: 0; top: 10%; bottom: 10%; width: 1px; background: linear-gradient(to bottom, transparent, var(--na-kraft) 30%, var(--na-kraft) 70%, transparent); opacity: 0; z-index: 2; animation: heroDividerFade 1.5s ease-out 5s forwards; }
+@keyframes heroDividerFade { 0% { opacity: 0; } 100% { opacity: 0.3; } }
+.na-hero__machinery-content { position: relative; z-index: 1; text-align: center; padding: 3rem; opacity: 0; transform: translateY(1.5rem); animation: heroTextEmerge 2s ease-out 4.5s forwards; }
+@keyframes heroTextEmerge { 0% { opacity: 0; transform: translateY(1.5rem); } 100% { opacity: 1; transform: translateY(0); } }
+
+/* Trust bullets */
+.na-hero__trust { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; margin-top: 2.5rem; }
+.na-hero__trust-item { display: flex; align-items: center; gap: 0.5rem; opacity: 0; transform: translateY(0.75rem); }
+.na-hero__trust-item:nth-child(1) { animation: trustItemIn 0.8s ease-out 6s forwards; }
+.na-hero__trust-item:nth-child(2) { animation: trustItemIn 0.8s ease-out 6.5s forwards; }
+.na-hero__trust-item:nth-child(3) { animation: trustItemIn 0.8s ease-out 7s forwards; }
+.na-hero__trust-item:nth-child(4) { animation: trustItemIn 0.8s ease-out 9s forwards; }
+@keyframes trustItemIn { 0% { opacity: 0; transform: translateY(0.75rem); } 100% { opacity: 1; transform: translateY(0); } }
+.na-hero__trust-dot { width: 0.375rem; height: 0.375rem; border-radius: 50%; background: var(--na-kraft); flex-shrink: 0; }
+.na-hero__trust-text { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver); }
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.na-btn { display: inline-block; padding: 0.75rem 2rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); font-weight: 500; transition: all 0.2s; text-align: center; }
+.na-btn--primary { background: var(--na-kraft); color: var(--na-ivory); }
+.na-btn--primary:hover { background: var(--na-kraft-light); }
+.na-btn--outline { background: transparent; border: 1px solid var(--na-ivory); color: var(--na-ivory); }
+.na-btn--outline:hover { background: var(--na-ivory); color: var(--na-charcoal); }
+.na-btn--outline-dark { background: transparent; border: 1px solid var(--na-charcoal); color: var(--na-charcoal); }
+.na-btn--outline-dark:hover { background: var(--na-charcoal); color: var(--na-ivory); }
+.na-btn--small { padding: 0.5rem 1.25rem; font-size: 0.6875rem; }
+
+/* ============================================================
+   CATEGORIES
+   ============================================================ */
+.na-categories { background: var(--na-ivory-dark); padding: 5rem 0; }
+.na-categories__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+@media (min-width: 768px) { .na-categories__grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1024px) { .na-categories__grid { grid-template-columns: repeat(5, 1fr); } }
+.na-category-card { display: block; padding: 1.5rem; background: var(--na-charcoal); transition: transform 0.2s; }
+.na-category-card:hover { transform: translateY(-0.25rem); }
+.na-category-card__line { width: 2rem; height: 2px; background: var(--na-kraft); margin-bottom: 1rem; transition: width 0.2s; }
+.na-category-card:hover .na-category-card__line { width: 3rem; }
+.na-category-card__name { font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-ivory); margin-bottom: 0.5rem; }
+.na-category-card__desc { font-size: 0.75rem; line-height: 1.6; color: var(--na-silver); }
+.na-category-card__count { font-size: 0.625rem; color: var(--na-kraft); margin-top: 0.75rem; letter-spacing: var(--na-tracking-wide); text-transform: uppercase; }
+
+/* ============================================================
+   SECTIONS
+   ============================================================ */
+.na-section { padding: 5rem 0; }
+.na-section--ivory { background: var(--na-ivory); }
+.na-section--ivory-dark { background: var(--na-ivory-dark); }
+.na-section--charcoal { background: var(--na-charcoal); }
+.na-section__header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 3.5rem; }
+.na-section__link { font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-kraft); }
+
+/* ============================================================
+   PRODUCT GRID
+   ============================================================ */
+.na-products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+@media (min-width: 768px) { .na-products-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1024px) { .na-products-grid { grid-template-columns: repeat(4, 1fr); } }
+.na-product-card { position: relative; display: flex; flex-direction: column; }
+.na-product-card__image { aspect-ratio: 1; background: var(--na-charcoal); margin-bottom: 1rem; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+.na-product-card__image img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s; }
+.na-product-card__image-placeholder { font-size: 1.5rem; font-weight: 300; letter-spacing: var(--na-tracking-widest); text-transform: uppercase; color: var(--na-silver); }
+.na-product-card__hover-line { position: absolute; bottom: 0; left: 0; right: 0; height: 2px; background: var(--na-kraft); opacity: 0; transition: opacity 0.2s; }
+.na-product-card:hover .na-product-card__hover-line { opacity: 1; }
+.na-product-card__name { font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: var(--na-tracking-wide); color: var(--na-charcoal); margin-bottom: 0.25rem; }
+.na-product-card__name a { color: inherit; }
+.na-product-card__name a:hover { color: var(--na-kraft); }
+.na-product-card__price { font-size: 0.75rem; color: var(--na-silver); margin-bottom: 0.75rem; flex-grow: 1; }
+.na-product-card .na-btn { width: 100%; margin-top: auto; }
+
+/* Loading */
+.na-loading { text-align: center; padding: 3rem; }
+.na-loading__spinner { display: inline-block; width: 2rem; height: 2rem; border: 2px solid var(--na-ivory-dark); border-top-color: var(--na-kraft); border-radius: 50%; animation: na-spin 0.8s linear infinite; }
+@keyframes na-spin { to { transform: rotate(360deg); } }
+.na-loading__text { font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver); margin-top: 1rem; }
+
+/* ============================================================
+   CTA
+   ============================================================ */
+.na-cta { background: var(--na-charcoal); padding: 6rem 0; text-align: center; }
+.na-cta__inner { max-width: 32rem; margin: 0 auto; }
+.na-cta h2 { font-size: 1.875rem; font-weight: 300; letter-spacing: var(--na-tracking-widest); text-transform: uppercase; color: var(--na-ivory); margin-bottom: 1rem; }
+.na-cta__subtitle { font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver); margin-bottom: 2.5rem; }
+.na-cta__form { display: flex; flex-direction: column; gap: 0.75rem; max-width: 28rem; margin: 0 auto 2rem; }
+@media (min-width: 640px) { .na-cta__form { flex-direction: row; } }
+.na-cta__input { flex: 1; padding: 0.75rem 1rem; font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-wide); background: transparent; border: 1px solid var(--na-white-20); color: var(--na-ivory); outline: none; font-family: var(--na-font-sans); }
+.na-cta__input::placeholder { color: var(--na-silver); }
+.na-cta__link { font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver); text-decoration: underline; text-underline-offset: 4px; }
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.na-footer { background: var(--na-charcoal); color: var(--na-ivory); }
+.na-footer__inner { display: grid; grid-template-columns: 1fr; gap: 3rem; padding: 4rem 0; }
+@media (min-width: 768px) { .na-footer__inner { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1024px) { .na-footer__inner { grid-template-columns: repeat(5, 1fr); } }
+.na-footer__brand p { font-size: 0.75rem; line-height: 1.6; color: var(--na-silver); }
+.na-footer__heading { font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-kraft); margin-bottom: 1.25rem; }
+.na-footer__links { list-style: none; display: flex; flex-direction: column; gap: 0.75rem; }
+.na-footer__links a { font-size: 0.75rem; letter-spacing: var(--na-tracking-wide); color: var(--na-silver); transition: color 0.2s; }
+.na-footer__links a:hover { color: var(--na-ivory); }
+.na-footer__contact p { font-size: 0.75rem; color: var(--na-silver); line-height: 1.6; }
+.na-footer__bottom { border-top: 1px solid var(--na-white-08); padding: 1.25rem 0; text-align: center; }
+.na-footer__bottom p { font-size: 0.75rem; color: var(--na-silver); }
+
+/* ============================================================
+   SHOP PAGE
+   ============================================================ */
+.na-shop-header { background: var(--na-charcoal); padding: 4rem 0; text-align: center; }
+.na-shop-header h1 { font-family: var(--na-font-display); font-size: 2.5rem; font-weight: 400; color: var(--na-ivory); }
+.na-shop-header p { font-size: 0.875rem; color: var(--na-silver); letter-spacing: var(--na-tracking-widest); text-transform: uppercase; margin-top: 0.75rem; }
+
+/* View switcher */
+.na-preview-view { display: none; }
+.na-preview-view.active { display: block; }
+
+/* Category filter bar */
+.na-filter-bar { padding: 1.5rem 0; border-bottom: 1px solid var(--na-ivory-dark); margin-bottom: 2rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center; }
+.na-filter-btn { padding: 0.5rem 1.25rem; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); font-weight: 500; color: var(--na-silver); border: 1px solid var(--na-ivory-dark); transition: all 0.2s; font-family: var(--na-font-sans); cursor: pointer; background: transparent; }
+.na-filter-btn:hover { color: var(--na-charcoal); border-color: var(--na-charcoal); }
+.na-filter-btn.active { background: var(--na-charcoal); color: var(--na-ivory); border-color: var(--na-charcoal); }
+.na-filter-label { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver); margin-right: 0.5rem; font-weight: 500; }
+
+/* ============================================================
+   1906 ESTABLISHED GRAPHIC (hero panel only)
+   ============================================================ */
+.na-1906 { text-align: center; margin-bottom: 2.5rem; }
+.na-1906__year { font-family: var(--na-font-display); font-size: 5rem; font-weight: 400; color: var(--na-ivory); line-height: 1; letter-spacing: 0.08em; position: relative; display: inline-block; }
+@media (min-width: 640px) { .na-1906__year { font-size: 7rem; } }
+@media (min-width: 1024px) { .na-1906__year { font-size: 9rem; } }
+.na-1906__year::before, .na-1906__year::after { content: ''; position: absolute; top: 50%; height: 1px; width: 2.5rem; background: var(--na-kraft); }
+.na-1906__year::before { right: calc(100% + 1.5rem); }
+.na-1906__year::after { left: calc(100% + 1.5rem); }
+.na-1906__label { display: block; font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: 0.4em; color: var(--na-kraft); margin-top: 0.5rem; }
+
+/* ============================================================
+   INDUSTRIAL BACKGROUND
+   ============================================================ */
+.na-industrial-bg { position: absolute; inset: 0; opacity: 0.07; background-image:
+  radial-gradient(ellipse at 20% 50%, rgba(255,255,255,0.08) 0%, transparent 50%),
+  radial-gradient(ellipse at 80% 30%, rgba(255,255,255,0.06) 0%, transparent 40%),
+  radial-gradient(circle at 60% 70%, rgba(255,255,255,0.04) 0%, transparent 30%),
+  repeating-linear-gradient(90deg, transparent, transparent 2px, rgba(255,255,255,0.015) 2px, rgba(255,255,255,0.015) 4px),
+  repeating-linear-gradient(0deg, transparent, transparent 40px, rgba(255,255,255,0.02) 40px, rgba(255,255,255,0.02) 41px),
+  repeating-linear-gradient(90deg, transparent, transparent 60px, rgba(255,255,255,0.02) 60px, rgba(255,255,255,0.02) 61px),
+  linear-gradient(135deg, rgba(255,255,255,0.03) 25%, transparent 25%, transparent 50%, rgba(255,255,255,0.03) 50%, rgba(255,255,255,0.03) 75%, transparent 75%);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 4px 4px, 100% 41px, 61px 100%, 20px 20px;
+}
+.na-industrial-bg::after { content: ''; position: absolute; inset: 0; background:
+  radial-gradient(circle at 30% 40%, transparent 0%, rgba(0,0,0,0.3) 100%);
+}
+
+/* ============================================================
+   HERITAGE SECTION
+   ============================================================ */
+.na-heritage { background: var(--na-charcoal); position: relative; overflow: hidden; padding: 6rem 0 5rem; }
+.na-heritage__inner { position: relative; z-index: 1; }
+.na-heritage__top { text-align: center; margin-bottom: 4rem; }
+.na-heritage__title--centered { text-align: center; font-size: 3rem; margin-bottom: 0; }
+@media (min-width: 640px) { .na-heritage__title--centered { font-size: 4rem; } }
+@media (min-width: 1024px) { .na-heritage__title--centered { font-size: 4.5rem; } }
+.na-heritage__title-accent { display: block; font-size: 0.45em; letter-spacing: 0.05em; color: var(--na-kraft-light); opacity: 0.9; margin-top: 0.25rem; }
+.na-heritage__columns { display: grid; grid-template-columns: 1fr; gap: 4rem; }
+@media (min-width: 768px) { .na-heritage__columns { grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; } }
+.na-heritage__eyebrow { font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-kraft); margin-bottom: 1.5rem; font-weight: 500; }
+.na-heritage__title { font-family: var(--na-font-display); font-size: 2.5rem; font-weight: 400; font-style: italic; color: var(--na-ivory); line-height: 1.15; margin-bottom: 2rem; }
+@media (min-width: 640px) { .na-heritage__title { font-size: 3.25rem; } }
+.na-heritage__text { font-size: 0.875rem; line-height: 1.8; color: var(--na-silver); margin-bottom: 1rem; }
+.na-heritage__timeline { border-left: 1px solid var(--na-white-10); padding-left: 2rem; display: flex; flex-direction: column; gap: 2rem; }
+.na-heritage__milestone { position: relative; }
+.na-heritage__milestone::before { content: ''; position: absolute; left: -2rem; top: 0.3rem; width: 7px; height: 7px; border-radius: 50%; background: var(--na-silver); transform: translateX(-3px); }
+.na-heritage__milestone--active::before { background: var(--na-kraft); box-shadow: 0 0 0 4px rgba(184,149,106,0.2); }
+.na-heritage__year { display: block; font-family: var(--na-font-display); font-size: 1.5rem; font-style: italic; color: var(--na-ivory); margin-bottom: 0.25rem; }
+.na-heritage__event { font-size: 0.75rem; line-height: 1.6; color: var(--na-silver); letter-spacing: var(--na-tracking-wide); }
+.na-heritage__cta { text-align: center; margin-top: 4rem; position: relative; z-index: 1; }
+.na-heritage__cta-divider { width: 4rem; height: 1px; background: var(--na-white-10); margin: 0 auto 2rem; }
+
+/* ============================================================
+   OUR STORY PAGE
+   ============================================================ */
+.na-story-hero { background: var(--na-charcoal); padding: 6rem 0 5rem; position: relative; overflow: hidden; }
+.na-story-hero__inner { position: relative; text-align: center; max-width: 48rem; margin: 0 auto; }
+.na-story-hero__title { font-family: var(--na-font-display); font-size: 3rem; font-weight: 400; font-style: italic; color: var(--na-ivory); line-height: 1.15; margin-bottom: 1.5rem; }
+@media (min-width: 640px) { .na-story-hero__title { font-size: 4rem; } }
+@media (min-width: 1024px) { .na-story-hero__title { font-size: 5rem; } }
+.na-story-hero__subtitle { font-size: 0.875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver); }
+.na-story-section { padding: 5rem 0; }
+.na-story-section--alt { background: var(--na-ivory-dark); }
+.na-story-body { max-width: 42rem; margin: 0 auto; }
+.na-story-body p { font-size: 1rem; line-height: 1.9; color: var(--na-charcoal); margin-bottom: 1.5rem; }
+.na-story-body p:first-child::first-letter { font-family: var(--na-font-display); font-size: 3.5rem; float: left; line-height: 0.8; margin-right: 0.5rem; margin-top: 0.15rem; color: var(--na-kraft); }
+.na-story-quote { max-width: 36rem; margin: 4rem auto; padding: 3rem 0; border-top: 1px solid var(--na-ivory-dark); border-bottom: 1px solid var(--na-ivory-dark); text-align: center; }
+.na-story-quote__text { font-family: var(--na-font-display); font-size: 1.75rem; font-style: italic; color: var(--na-charcoal); line-height: 1.4; margin-bottom: 1rem; }
+@media (min-width: 640px) { .na-story-quote__text { font-size: 2rem; } }
+.na-story-quote__attr { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-kraft); }
+.na-story-grid { display: grid; grid-template-columns: 1fr; gap: 3rem; max-width: 64rem; margin: 0 auto; align-items: center; }
+@media (min-width: 768px) { .na-story-grid { grid-template-columns: 1fr 1fr; gap: 5rem; } }
+.na-story-grid__image { aspect-ratio: 4/3; background: var(--na-charcoal); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.na-story-grid__image span { font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver); }
+.na-story-grid__text h3 { font-family: var(--na-font-display); font-size: 1.75rem; font-style: italic; font-weight: 400; color: var(--na-charcoal); margin-bottom: 1.25rem; line-height: 1.3; }
+.na-story-grid__text p { font-size: 0.875rem; line-height: 1.8; color: var(--na-silver); margin-bottom: 1rem; }
+.na-story-timeline { max-width: 48rem; margin: 0 auto; position: relative; }
+.na-story-timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 1px; background: var(--na-ivory-dark); transform: translateX(-50%); }
+@media (max-width: 767px) { .na-story-timeline::before { left: 1rem; } }
+.na-story-timeline__item { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-bottom: 3rem; position: relative; }
+@media (max-width: 767px) { .na-story-timeline__item { grid-template-columns: 1fr; padding-left: 3rem; } }
+.na-story-timeline__item::after { content: ''; position: absolute; left: 50%; top: 0.5rem; width: 9px; height: 9px; border-radius: 50%; background: var(--na-kraft); transform: translateX(-50%); }
+@media (max-width: 767px) { .na-story-timeline__item::after { left: 1rem; } }
+.na-story-timeline__year { font-family: var(--na-font-display); font-size: 2rem; font-style: italic; color: var(--na-charcoal); text-align: right; }
+@media (max-width: 767px) { .na-story-timeline__year { text-align: left; } }
+.na-story-timeline__desc { font-size: 0.875rem; line-height: 1.8; color: var(--na-silver); }
+.na-story-values { display: grid; grid-template-columns: 1fr; gap: 2rem; max-width: 64rem; margin: 0 auto; }
+@media (min-width: 768px) { .na-story-values { grid-template-columns: repeat(3, 1fr); gap: 3rem; } }
+.na-story-value { text-align: center; padding: 2rem; }
+.na-story-value__icon { font-size: 1.5rem; margin-bottom: 1.5rem; color: var(--na-kraft); }
+.na-story-value__title { font-size: 0.75rem; font-weight: 500; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-charcoal); margin-bottom: 1rem; }
+.na-story-value__text { font-size: 0.75rem; line-height: 1.8; color: var(--na-silver); }
+
+/* Policy / Legal Pages */
+.na-policy-hero { background: var(--na-charcoal); color: var(--na-ivory); padding: 4rem 0 3rem; text-align: center; }
+.na-policy-hero__eyebrow { font-size: 0.625rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-kraft); margin-bottom: 1rem; display: block; }
+.na-policy-hero__title { font-family: var(--na-font-display); font-size: 2.5rem; font-weight: 400; font-style: italic; color: var(--na-ivory); margin-bottom: 0.75rem; }
+@media (min-width: 640px) { .na-policy-hero__title { font-size: 3rem; } }
+.na-policy-hero__updated { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver); }
+.na-policy-body { max-width: 760px; margin: 0 auto; padding: 4rem 1rem; }
+@media (min-width: 640px) { .na-policy-body { padding: 5rem 1.5rem; } }
+.na-policy-body h2 { font-size: 1.1rem; font-weight: 300; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); margin: 3rem 0 1rem; color: var(--na-charcoal); }
+.na-policy-body h2:first-child { margin-top: 0; }
+.na-policy-body h3 { font-size: 0.9375rem; font-weight: 500; text-transform: uppercase; letter-spacing: var(--na-tracking-wide); margin: 2rem 0 0.75rem; color: var(--na-charcoal); }
+.na-policy-body p { font-size: 0.9375rem; line-height: 1.8; color: #444; margin-bottom: 1.25rem; }
+.na-policy-body ul, .na-policy-body ol { padding-left: 1.5rem; margin-bottom: 1.25rem; }
+.na-policy-body li { font-size: 0.9375rem; line-height: 1.8; color: #444; margin-bottom: 0.5rem; }
+.na-policy-body a { color: var(--na-kraft); text-decoration: underline; text-underline-offset: 3px; }
+.na-policy-body strong { font-weight: 600; }
+.na-policy-body .na-policy-callout { background: var(--na-charcoal); color: var(--na-ivory); padding: 2rem; margin: 2.5rem 0; }
+.na-policy-body .na-policy-callout p { color: var(--na-silver); margin-bottom: 0.5rem; }
+.na-policy-body .na-policy-callout p:last-child { margin-bottom: 0; }
+.na-policy-body .na-policy-callout strong { color: var(--na-ivory); }
+.na-policy-back { text-align: center; padding-bottom: 4rem; }
+.na-policy-back a { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-kraft); }
+
+/* Contact / Wholesale Forms */
+.na-form-grid { display: grid; grid-template-columns: 1fr; gap: 1.5rem; margin-bottom: 2rem; }
+@media (min-width: 640px) { .na-form-grid { grid-template-columns: 1fr 1fr; } }
+.na-form-grid--full { grid-column: 1 / -1; }
+.na-form-field label { display: block; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-charcoal); margin-bottom: 0.5rem; font-weight: 500; }
+.na-form-field input,
+.na-form-field select,
+.na-form-field textarea { width: 100%; padding: 0.875rem 1rem; font-size: 0.9375rem; font-family: var(--na-font-sans); border: 1px solid #d0cdc6; background: #fff; color: var(--na-charcoal); outline: none; transition: border-color 0.2s; }
+.na-form-field input:focus,
+.na-form-field select:focus,
+.na-form-field textarea:focus { border-color: var(--na-kraft); }
+.na-form-field textarea { min-height: 150px; resize: vertical; }
+.na-form-field select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%238a9099' d='M1.41 0L6 4.58 10.59 0 12 1.41l-6 6-6-6z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
+.na-form-submit { margin-top: 1rem; }
+.na-contact-info { display: grid; grid-template-columns: 1fr; gap: 2rem; margin-top: 3rem; padding-top: 3rem; border-top: 1px solid #d0cdc6; }
+@media (min-width: 640px) { .na-contact-info { grid-template-columns: 1fr 1fr 1fr; } }
+.na-contact-info__item h3 { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-kraft); margin-bottom: 0.75rem; }
+.na-contact-info__item p { font-size: 0.9375rem; line-height: 1.8; color: #444; }
+.na-contact-info__item a { color: var(--na-kraft); text-decoration: underline; text-underline-offset: 3px; }
+
+/* Single Product Page */
+.na-product-breadcrumb { background: var(--na-charcoal); padding: 1rem 0; }
+.na-product-breadcrumb a { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver); transition: color 0.2s; }
+.na-product-breadcrumb a:hover { color: var(--na-ivory); }
+.na-product-breadcrumb__sep { font-size: 0.625rem; color: var(--na-white-20); margin: 0 0.5rem; }
+.na-product-breadcrumb__current { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-ivory); }
+.na-single-product { background: var(--na-ivory); padding: 4rem 0; }
+.na-single-product__layout { display: grid; grid-template-columns: 1fr; gap: 3rem; }
+@media (min-width: 768px) { .na-single-product__layout { grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; } }
+@media (min-width: 1024px) { .na-single-product__layout { grid-template-columns: 55% 45%; gap: 5rem; } }
+.na-single-product__main-image { background: var(--na-charcoal); aspect-ratio: 1; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.na-single-product__main-image img { width: 100%; height: 100%; object-fit: cover; }
+.na-single-product__placeholder { color: var(--na-silver); font-size: 3rem; font-weight: 300; letter-spacing: var(--na-tracking-widest); text-transform: uppercase; }
+.na-single-product__thumbs { display: flex; gap: 0.5rem; margin-top: 0.75rem; overflow-x: auto; }
+.na-single-product__thumb { width: 4.5rem; height: 4.5rem; flex-shrink: 0; padding: 0; border: 2px solid transparent; background: var(--na-charcoal); cursor: pointer; overflow: hidden; transition: border-color 0.2s; display: flex; align-items: center; justify-content: center; }
+.na-single-product__thumb span { font-size: 0.5rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver); }
+.na-single-product__thumb--active, .na-single-product__thumb:hover { border-color: var(--na-kraft); }
+.na-single-product__category { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-kraft); margin-bottom: 0.75rem; font-weight: 500; }
+.na-single-product__title { font-family: var(--na-font-display); font-size: 2rem; font-weight: 400; font-style: italic; color: var(--na-charcoal); line-height: 1.2; margin-bottom: 1rem; }
+@media (min-width: 640px) { .na-single-product__title { font-size: 2.5rem; } }
+.na-single-product__price { font-size: 1.25rem; font-weight: 500; color: var(--na-charcoal); margin-bottom: 1rem; }
+.na-single-product__short-desc { font-size: 0.875rem; line-height: 1.8; color: var(--na-silver); }
+.na-single-product__short-desc p { margin-bottom: 0.75rem; }
+.na-single-product__actions { display: flex; align-items: center; gap: 1rem; margin: 1.5rem 0; }
+.na-single-product__qty { width: 4rem; padding: 0.75rem; text-align: center; font-size: 0.875rem; border: 1px solid var(--na-ivory-dark); background: transparent; color: var(--na-charcoal); font-family: var(--na-font-sans); outline: none; }
+.na-single-product__qty:focus { border-color: var(--na-kraft); }
+.na-single-product__trust { display: flex; flex-direction: column; gap: 0.5rem; margin: 2rem 0 1.5rem; padding: 1.5rem 0; border-top: 1px solid var(--na-ivory-dark); border-bottom: 1px solid var(--na-ivory-dark); }
+.na-single-product__trust-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver); }
+.na-single-product__meta { font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-wide); color: var(--na-silver); }
+.na-single-product__meta strong { color: var(--na-charcoal); font-weight: 500; }
+.na-product-tabs { background: var(--na-ivory); padding: 0 0 4rem; }
+.na-product-tabs__nav { display: flex; gap: 0; border-bottom: 1px solid var(--na-ivory-dark); margin-bottom: 2rem; }
+.na-product-tabs__btn { padding: 1rem 1.5rem; font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); font-weight: 500; color: var(--na-silver); cursor: pointer; border: none; background: transparent; border-bottom: 2px solid transparent; font-family: var(--na-font-sans); transition: all 0.2s; margin-bottom: -1px; }
+.na-product-tabs__btn:hover { color: var(--na-charcoal); }
+.na-product-tabs__btn--active { color: var(--na-charcoal); border-bottom-color: var(--na-kraft); }
+.na-product-tabs__panel { display: none; }
+.na-product-tabs__panel--active { display: block; }
+.na-product-tabs__body { max-width: 48rem; font-size: 0.875rem; line-height: 1.8; color: var(--na-charcoal); }
+.na-product-tabs__body p { margin-bottom: 1rem; }
+.na-product-tabs__table { width: 100%; max-width: 36rem; border-collapse: collapse; }
+.na-product-tabs__table th, .na-product-tabs__table td { padding: 0.75rem 1rem; font-size: 0.8125rem; border-bottom: 1px solid var(--na-ivory-dark); text-align: left; }
+.na-product-tabs__table th { font-weight: 500; text-transform: uppercase; letter-spacing: var(--na-tracking-wide); font-size: 0.6875rem; color: var(--na-charcoal); width: 30%; }
+.na-product-tabs__table td { color: var(--na-silver); }
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     HOMEPAGE VIEW
+     ============================================================ -->
+<div class="na-preview-view active" id="view-homepage">
+
+  <header class="na-header">
+    <div class="na-container">
+      <div class="na-header__inner">
+        <div class="na-header__brand">
+          <a href="#" class="na-header__logo">Native Archival</a>
+          <div class="na-header__social">
+            <a href="https://facebook.com/nativearchival" target="_blank" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="https://instagram.com/nativearchival" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          </div>
+        </div>
+        <nav class="na-header__nav">
+          <a href="#" onclick="switchView('homepage'); return false;">Home</a>
+          <a href="#" onclick="switchView('shop'); return false;">Shop</a>
+          <a href="#" onclick="switchView('blog'); return false;">Blog</a>
+          <a href="#" onclick="switchView('story'); return false;">Our Story</a>
+        </nav>
+        <div class="na-header__actions">
+          <a href="#" class="na-header__login" onclick="switchView('login'); return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+            </svg>
+            <span class="na-header__login-text">Login</span>
+          </a>
+          <a href="#" class="na-header__cart">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" />
+            </svg>
+            <span class="na-header__cart-count">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="na-hero">
+    <div class="na-hero__inner">
+      <div class="na-hero__content">
+        <span class="na-kraft-line" style="width: 3rem; margin-bottom: 2rem;"></span>
+        <h1>Preserve<br>What<br>Matters.</h1>
+        <p class="na-hero__subtitle">Archival-quality storage products made in the USA.</p>
+        <div class="na-hero__actions">
+          <a href="#" class="na-btn na-btn--primary" onclick="switchView('shop'); return false;">Shop Now</a>
+          <a href="#" class="na-btn na-btn--outline" onclick="switchView('story'); return false;">Learn More</a>
+        </div>
+      </div>
+      <div class="na-hero__machinery">
+        <div class="na-hero__photo">
+          <video class="na-hero__video" autoplay muted loop playsinline>
+            <source src="hero-boxmaking.mp4" type="video/mp4">
+          </video>
+        </div>
+        <div class="na-hero__machinery-divider"></div>
+        <div class="na-hero__machinery-content">
+          <div class="na-1906">
+            <span class="na-1906__year">1906</span>
+            <span class="na-1906__label">Established</span>
+          </div>
+          <div class="na-hero__trust">
+            <div class="na-hero__trust-item"><span class="na-hero__trust-dot"></span><span class="na-hero__trust-text">Made in the USA</span></div>
+            <div class="na-hero__trust-item"><span class="na-hero__trust-dot"></span><span class="na-hero__trust-text">Acid-Free &amp; Archival</span></div>
+            <div class="na-hero__trust-item"><span class="na-hero__trust-dot"></span><span class="na-hero__trust-text">Direct-to-Consumer Pricing</span></div>
+            <div class="na-hero__trust-item"><span class="na-hero__trust-dot"></span><span class="na-hero__trust-text">Custom Design &amp; Manufacturing Options</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories -->
+  <section class="na-categories">
+    <div class="na-container">
+      <div style="text-align: center; margin-bottom: 3.5rem;">
+        <span class="na-kraft-line na-kraft-line--center" style="margin-bottom: 1.5rem;"></span>
+        <h2 style="font-size: 1.5rem; font-weight: 300; text-transform: uppercase; letter-spacing: var(--na-tracking-widest);">Shop by Category</h2>
+      </div>
+      <div class="na-categories__grid" id="categories-grid"></div>
+    </div>
+  </section>
+
+  <!-- Featured Products -->
+  <section class="na-section na-section--ivory">
+    <div class="na-container">
+      <div class="na-section__header">
+        <div>
+          <span class="na-kraft-line" style="margin-bottom: 1rem;"></span>
+          <h2 style="font-size: 1.5rem; font-weight: 300; text-transform: uppercase; letter-spacing: var(--na-tracking-widest);">Featured Products</h2>
+        </div>
+        <a href="#" class="na-section__link" onclick="switchView('shop'); return false;">View All &rarr;</a>
+      </div>
+      <div class="na-products-grid" id="featured-products">
+        <div class="na-loading" style="grid-column: 1/-1;"><div class="na-loading__spinner"></div><p class="na-loading__text">Loading products...</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Blog Preview -->
+  <section class="na-section na-section--ivory-dark">
+    <div class="na-container">
+      <div class="na-section__header">
+        <div>
+          <span class="na-kraft-line" style="margin-bottom: 1rem;"></span>
+          <h2 style="font-size: 1.5rem; font-weight: 300; text-transform: uppercase; letter-spacing: var(--na-tracking-widest);">The Archival Journal</h2>
+        </div>
+        <a href="#" class="na-section__link" onclick="switchView('blog'); return false;">All Posts &rarr;</a>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+        <article>
+          <div style="aspect-ratio: 16/9; background: var(--na-charcoal); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;">
+            <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver);">Archival Journal</span>
+          </div>
+          <span class="na-kraft-line" style="width: 1.5rem; margin-bottom: 1rem;"></span>
+          <h3 style="font-size: 0.875rem; font-weight: 500; text-transform: uppercase; letter-spacing: var(--na-tracking-wide); margin-bottom: 0.75rem; line-height: 1.6;"><a href="#" onclick="showBlogPost('store-photos'); return false;" style="color: inherit;">How to Store Photos So They Last 100 Years</a></h3>
+          <p style="font-size: 0.75rem; line-height: 1.6; color: var(--na-silver); margin-bottom: 1rem;">Learn the archival best practices professionals use to preserve photographs for generations.</p>
+          <a href="#" onclick="showBlogPost('store-photos'); return false;" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-kraft);">Read More &rarr;</a>
+        </article>
+        <article>
+          <div style="aspect-ratio: 16/9; background: var(--na-charcoal); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;">
+            <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver);">Archival Journal</span>
+          </div>
+          <span class="na-kraft-line" style="width: 1.5rem; margin-bottom: 1rem;"></span>
+          <h3 style="font-size: 0.875rem; font-weight: 500; text-transform: uppercase; letter-spacing: var(--na-tracking-wide); margin-bottom: 0.75rem; line-height: 1.6;"><a href="#" onclick="showBlogPost('acid-free'); return false;" style="color: inherit;">What Does Acid-Free Actually Mean?</a></h3>
+          <p style="font-size: 0.75rem; line-height: 1.6; color: var(--na-silver); margin-bottom: 1rem;">Understanding the science behind archival materials and why pH levels matter for preservation.</p>
+          <a href="#" onclick="showBlogPost('acid-free'); return false;" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-kraft);">Read More &rarr;</a>
+        </article>
+        <article>
+          <div style="aspect-ratio: 16/9; background: var(--na-charcoal); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;">
+            <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver);">Archival Journal</span>
+          </div>
+          <span class="na-kraft-line" style="width: 1.5rem; margin-bottom: 1rem;"></span>
+          <h3 style="font-size: 0.875rem; font-weight: 500; text-transform: uppercase; letter-spacing: var(--na-tracking-wide); margin-bottom: 0.75rem; line-height: 1.6;"><a href="#" onclick="showBlogPost('card-collector'); return false;" style="color: inherit;">Card Collector's Guide to Archival Storage</a></h3>
+          <p style="font-size: 0.75rem; line-height: 1.6; color: var(--na-silver); margin-bottom: 1rem;">Protect your graded cards and collectibles with proper archival storage solutions.</p>
+          <a href="#" onclick="showBlogPost('card-collector'); return false;" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-kraft);">Read More &rarr;</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Heritage Section -->
+  <section class="na-heritage">
+    <div class="na-industrial-bg"></div>
+    <div class="na-container">
+      <div class="na-heritage__inner">
+        <div class="na-heritage__top">
+          <p class="na-heritage__eyebrow">Our Heritage</p>
+          <h2 class="na-heritage__title na-heritage__title--centered">Box Makers.<br><span class="na-heritage__title-accent">Where Craft Meets Conservation.</span></h2>
+        </div>
+        <div class="na-heritage__columns">
+          <div>
+            <p class="na-heritage__text">At Pulp Packaging Inc.&mdash;the makers behind Native Archival&mdash;our story is built into every box we create. It began in 1906, when H.R. Drake &amp; Sons first crafted boxes in the very factory we still call home today.</p>
+            <p class="na-heritage__text">More than a century later, one thing has remained constant: we are box makers. Craftsmen who believe the contents deserve respect.</p>
+            <a href="#" class="na-btn na-btn--outline" onclick="switchView('story'); return false;" style="margin-top: 1.5rem;">Our Story &rarr;</a>
+          </div>
+          <div class="na-heritage__timeline">
+            <div class="na-heritage__milestone">
+              <span class="na-heritage__year">1906</span>
+              <span class="na-heritage__event">HR Drake &amp; Sons begins making boxes in Palmyra, NY</span>
+            </div>
+            <div class="na-heritage__milestone">
+              <span class="na-heritage__year">1950s</span>
+              <span class="na-heritage__event">Paul T. Freund Corp. acquires the factory, expanding operations</span>
+            </div>
+            <div class="na-heritage__milestone">
+              <span class="na-heritage__year">2000s</span>
+              <span class="na-heritage__event">Pulp Packaging Inc. consolidates into the Erie Canal facility</span>
+            </div>
+            <div class="na-heritage__milestone">
+              <span class="na-heritage__year">2018</span>
+              <span class="na-heritage__event">Native Archival launches &mdash; archival products direct to consumer</span>
+            </div>
+            <div class="na-heritage__milestone na-heritage__milestone--active">
+              <span class="na-heritage__year">Today</span>
+              <span class="na-heritage__event">120+ years of craft. Still made in the USA.</span>
+            </div>
+          </div>
+        </div>
+        <div class="na-heritage__cta">
+          <div class="na-heritage__cta-divider"></div>
+          <a href="#" class="na-btn na-btn--outline" onclick="switchView('shop'); return false;">Shop All Products &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="na-cta">
+    <div class="na-container">
+      <div class="na-cta__inner">
+        <span class="na-kraft-line na-kraft-line--center" style="margin-bottom: 2rem;"></span>
+        <h2>Protecting Your Memories Starts Here.</h2>
+        <p class="na-cta__subtitle">Join thousands of collectors, photographers, and archivists.</p>
+        <div class="na-cta__form">
+          <input type="email" placeholder="YOUR EMAIL ADDRESS" class="na-cta__input">
+          <button class="na-btn na-btn--primary">Subscribe</button>
+        </div>
+        <a href="#" class="na-cta__link" onclick="switchView('shop'); return false;">Shop All Products</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="na-footer">
+    <div class="na-container">
+      <div class="na-footer__inner">
+        <div class="na-footer__brand">
+          <h3 class="na-header__logo" style="margin-bottom: 1rem;">Native Archival</h3>
+          <p>Professional archival and preservation products. Made in the USA.</p>
+          <div style="margin-top: 1.5rem;"><span class="na-kraft-line"></span></div>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Products</h4>
+          <ul class="na-footer__links" id="footer-products">
+            <li><a href="#">Albums</a></li>
+            <li><a href="#">Photo Storage</a></li>
+            <li><a href="#">Print Preservers</a></li>
+            <li><a href="#">Portfolios</a></li>
+            <li><a href="#">Card Collectors</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Company</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('story'); return false;">Our Story</a></li>
+            <li><a href="#" onclick="switchView('blog'); return false;">Blog</a></li>
+            <li><a href="#" onclick="switchView('contact'); return false;">Contact</a></li>
+            <li><a href="#" onclick="switchView('wholesale'); return false;">Wholesale</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Resources</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('shipping'); return false;">Shipping &amp; Returns</a></li>
+            <li><a href="#" onclick="switchView('privacy'); return false;">Privacy Policy</a></li>
+            <li><a href="#" onclick="switchView('terms'); return false;">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Connect</h4>
+          <ul class="na-footer__links">
+            <li><a href="https://instagram.com/nativearchival" target="_blank">Instagram</a></li>
+            <li><a href="https://facebook.com/nativearchival" target="_blank">Facebook</a></li>
+          </ul>
+          <div class="na-footer__contact" style="margin-top: 2rem;">
+            <p>custservice@nativearchival.com</p>
+            <p>315-502-4265</p>
+            <p style="margin-top: 0.5rem;">P.O. Box 475</p>
+            <p>Palmyra, NY 14522</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="na-footer__bottom">
+      <div class="na-container">
+        <p>&copy; 2026 Native Archival. Made in the USA. Operated by Pulp Packaging, Inc.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ============================================================
+     SHOP VIEW
+     ============================================================ -->
+<div class="na-preview-view" id="view-shop">
+
+  <header class="na-header">
+    <div class="na-container">
+      <div class="na-header__inner">
+        <div class="na-header__brand">
+          <a href="#" class="na-header__logo" onclick="switchView('homepage'); return false;">Native Archival</a>
+          <div class="na-header__social">
+            <a href="https://facebook.com/nativearchival" target="_blank" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="https://instagram.com/nativearchival" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          </div>
+        </div>
+        <nav class="na-header__nav">
+          <a href="#" onclick="switchView('homepage'); return false;">Home</a>
+          <a href="#" onclick="switchView('shop'); return false;">Shop</a>
+          <a href="#" onclick="switchView('blog'); return false;">Blog</a>
+          <a href="#" onclick="switchView('story'); return false;">Our Story</a>
+        </nav>
+        <div class="na-header__actions">
+          <a href="#" class="na-header__login" onclick="switchView('login'); return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+            <span class="na-header__login-text">Login</span>
+          </a>
+          <a href="#" class="na-header__cart">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" /></svg>
+            <span class="na-header__cart-count">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="na-shop-header">
+    <div class="na-container">
+      <span class="na-kraft-line na-kraft-line--center" style="margin-bottom: 1.5rem;"></span>
+      <h1>Shop</h1>
+      <p id="shop-count"></p>
+    </div>
+  </div>
+
+  <section class="na-section na-section--ivory">
+    <div class="na-container">
+      <div class="na-filter-bar" id="shop-filter-bar">
+        <span class="na-filter-label">Filter:</span>
+        <button class="na-filter-btn active" data-cat="all">All Products</button>
+      </div>
+      <div class="na-products-grid" id="all-products">
+        <div class="na-loading" style="grid-column: 1/-1;"><div class="na-loading__spinner"></div><p class="na-loading__text">Loading products...</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="na-cta">
+    <div class="na-container">
+      <div class="na-cta__inner">
+        <span class="na-kraft-line na-kraft-line--center" style="margin-bottom: 2rem;"></span>
+        <h2>Protecting Your Memories Starts Here.</h2>
+        <p class="na-cta__subtitle">Join thousands of collectors, photographers, and archivists.</p>
+        <div class="na-cta__form">
+          <input type="email" placeholder="YOUR EMAIL ADDRESS" class="na-cta__input">
+          <button class="na-btn na-btn--primary">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="na-footer">
+    <div class="na-container">
+      <div class="na-footer__inner">
+        <div class="na-footer__brand">
+          <h3 class="na-header__logo" style="margin-bottom: 1rem;">Native Archival</h3>
+          <p>Professional archival and preservation products. Made in the USA.</p>
+          <div style="margin-top: 1.5rem;"><span class="na-kraft-line"></span></div>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Products</h4>
+          <ul class="na-footer__links">
+            <li><a href="#">Albums</a></li>
+            <li><a href="#">Photo Storage</a></li>
+            <li><a href="#">Print Preservers</a></li>
+            <li><a href="#">Portfolios</a></li>
+            <li><a href="#">Card Collectors</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Company</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('story'); return false;">Our Story</a></li>
+            <li><a href="#" onclick="switchView('blog'); return false;">Blog</a></li>
+            <li><a href="#" onclick="switchView('contact'); return false;">Contact</a></li>
+            <li><a href="#" onclick="switchView('wholesale'); return false;">Wholesale</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Resources</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('shipping'); return false;">Shipping &amp; Returns</a></li>
+            <li><a href="#" onclick="switchView('privacy'); return false;">Privacy Policy</a></li>
+            <li><a href="#" onclick="switchView('terms'); return false;">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Connect</h4>
+          <ul class="na-footer__links">
+            <li><a href="https://instagram.com/nativearchival" target="_blank">Instagram</a></li>
+            <li><a href="https://facebook.com/nativearchival" target="_blank">Facebook</a></li>
+          </ul>
+          <div class="na-footer__contact" style="margin-top: 2rem;">
+            <p>custservice@nativearchival.com</p>
+            <p>315-502-4265</p>
+            <p style="margin-top: 0.5rem;">P.O. Box 475</p>
+            <p>Palmyra, NY 14522</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="na-footer__bottom">
+      <div class="na-container">
+        <p>&copy; 2026 Native Archival. Made in the USA. Operated by Pulp Packaging, Inc.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ============================================================
+     LOGIN VIEW
+     ============================================================ -->
+<div class="na-preview-view" id="view-login">
+
+  <header class="na-header">
+    <div class="na-container">
+      <div class="na-header__inner">
+        <div class="na-header__brand">
+          <a href="#" class="na-header__logo" onclick="switchView('homepage'); return false;">Native Archival</a>
+          <div class="na-header__social">
+            <a href="https://facebook.com/nativearchival" target="_blank" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="https://instagram.com/nativearchival" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          </div>
+        </div>
+        <nav class="na-header__nav">
+          <a href="#" onclick="switchView('homepage'); return false;">Home</a>
+          <a href="#" onclick="switchView('shop'); return false;">Shop</a>
+          <a href="#" onclick="switchView('blog'); return false;">Blog</a>
+          <a href="#" onclick="switchView('story'); return false;">Our Story</a>
+        </nav>
+        <div class="na-header__actions">
+          <a href="#" class="na-header__login" onclick="switchView('login'); return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+            <span class="na-header__login-text">Login</span>
+          </a>
+          <a href="#" class="na-header__cart">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" /></svg>
+            <span class="na-header__cart-count">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="na-shop-header">
+    <div class="na-container">
+      <span class="na-kraft-line na-kraft-line--center" style="margin-bottom: 1.5rem;"></span>
+      <h1>My Account</h1>
+    </div>
+  </div>
+
+  <div class="na-section na-section--ivory">
+    <div class="na-container">
+      <div class="na-account-page">
+        <div class="na-account-panel">
+          <h2 class="na-account-panel__title">Login</h2>
+          <form class="na-login__form" onsubmit="return false;">
+            <div class="na-login__field">
+              <label for="login-user">Username or email address <span class="na-required">*</span></label>
+              <input type="text" id="login-user" autocomplete="username">
+            </div>
+            <div class="na-login__field">
+              <label for="login-pass">Password <span class="na-required">*</span></label>
+              <input type="password" id="login-pass" autocomplete="current-password">
+              <button type="button" class="na-show-password" onclick="var p=document.getElementById('login-pass'); p.type=p.type==='password'?'text':'password'; this.textContent=p.type==='password'?'Show Password':'Hide Password';">Show Password</button>
+            </div>
+            <div class="na-recaptcha">
+              <input type="checkbox" class="na-recaptcha__checkbox" id="login-recaptcha">
+              <label for="login-recaptcha" class="na-recaptcha__label">I'm not a robot</label>
+              <div class="na-recaptcha__logo">
+                <span class="na-recaptcha__logo-img">&#x1F6E1;</span>
+                <span class="na-recaptcha__logo-text">reCAPTCHA</span>
+                <span class="na-recaptcha__logo-links">Privacy - Terms</span>
+              </div>
+            </div>
+            <div class="na-login__row">
+              <button type="submit" class="na-login__submit">Log in</button>
+              <label class="na-login__remember"><input type="checkbox"> Remember me</label>
+            </div>
+            <a href="#" class="na-login__forgot">Lost your password?</a>
+          </form>
+        </div>
+        <div class="na-account-panel na-account-panel--register">
+          <h2 class="na-account-panel__title">Register</h2>
+          <form class="na-login__form" onsubmit="return false;">
+            <div class="na-login__field">
+              <label for="register-email">Email address <span class="na-required">*</span></label>
+              <input type="email" id="register-email">
+            </div>
+            <p class="na-register-note">A link to set a new password will be sent to your email address.</p>
+            <div class="na-recaptcha">
+              <input type="checkbox" class="na-recaptcha__checkbox" id="register-recaptcha">
+              <label for="register-recaptcha" class="na-recaptcha__label">I'm not a robot</label>
+              <div class="na-recaptcha__logo">
+                <span class="na-recaptcha__logo-img">&#x1F6E1;</span>
+                <span class="na-recaptcha__logo-text">reCAPTCHA</span>
+                <span class="na-recaptcha__logo-links">Privacy - Terms</span>
+              </div>
+            </div>
+            <label class="na-newsletter-check"><input type="checkbox" checked> Subscribe to our newsletter</label>
+            <p class="na-privacy-text">Your personal data will be used to support your experience throughout this website, to manage access to your account, and for other purposes described in our privacy policy.</p>
+            <button type="submit" class="na-login__submit">Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="na-footer">
+    <div class="na-container">
+      <div class="na-footer__inner">
+        <div class="na-footer__brand">
+          <h3 class="na-header__logo" style="margin-bottom: 1rem;">Native Archival</h3>
+          <p>Professional archival and preservation products. Made in the USA.</p>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Products</h4>
+          <ul class="na-footer__links">
+            <li><a href="#">Albums</a></li>
+            <li><a href="#">Photo Storage</a></li>
+            <li><a href="#">Print Preservers</a></li>
+            <li><a href="#">Portfolios</a></li>
+            <li><a href="#">Card Collectors</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Company</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('story'); return false;">Our Story</a></li>
+            <li><a href="#" onclick="switchView('blog'); return false;">Blog</a></li>
+            <li><a href="#" onclick="switchView('contact'); return false;">Contact</a></li>
+            <li><a href="#" onclick="switchView('wholesale'); return false;">Wholesale</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Resources</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('shipping'); return false;">Shipping &amp; Returns</a></li>
+            <li><a href="#" onclick="switchView('privacy'); return false;">Privacy Policy</a></li>
+            <li><a href="#" onclick="switchView('terms'); return false;">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Connect</h4>
+          <ul class="na-footer__links">
+            <li><a href="https://instagram.com/nativearchival" target="_blank">Instagram</a></li>
+            <li><a href="https://facebook.com/nativearchival" target="_blank">Facebook</a></li>
+          </ul>
+          <div class="na-footer__contact" style="margin-top: 2rem;">
+            <p>custservice@nativearchival.com</p>
+            <p>315-502-4265</p>
+            <p style="margin-top: 0.5rem;">P.O. Box 475</p>
+            <p>Palmyra, NY 14522</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="na-footer__bottom">
+      <div class="na-container">
+        <p>&copy; 2026 Native Archival. Made in the USA. Operated by Pulp Packaging, Inc.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ============================================================
+     OUR STORY VIEW
+     ============================================================ -->
+<div class="na-preview-view" id="view-story">
+
+  <header class="na-header">
+    <div class="na-container">
+      <div class="na-header__inner">
+        <div class="na-header__brand">
+          <a href="#" class="na-header__logo" onclick="switchView('homepage'); return false;">Native Archival</a>
+          <div class="na-header__social">
+            <a href="https://facebook.com/nativearchival" target="_blank" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="https://instagram.com/nativearchival" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          </div>
+        </div>
+        <nav class="na-header__nav">
+          <a href="#" onclick="switchView('homepage'); return false;">Home</a>
+          <a href="#" onclick="switchView('shop'); return false;">Shop</a>
+          <a href="#" onclick="switchView('blog'); return false;">Blog</a>
+          <a href="#" onclick="switchView('story'); return false;">Our Story</a>
+        </nav>
+        <div class="na-header__actions">
+          <a href="#" class="na-header__login" onclick="switchView('login'); return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+            <span class="na-header__login-text">Login</span>
+          </a>
+          <a href="#" class="na-header__cart">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" /></svg>
+            <span class="na-header__cart-count">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="na-story-hero">
+    <div class="na-industrial-bg"></div>
+    <div class="na-container">
+      <div class="na-story-hero__inner">
+        <h1 class="na-story-hero__title">Our Story</h1>
+        <p class="na-story-hero__subtitle">Hand crafted. Brand building. Made in America.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="na-story-section na-section--ivory">
+    <div class="na-container">
+      <div class="na-story-body">
+        <p>At Pulp Packaging Inc.&mdash;the makers behind Native Archival&mdash;our story is built into every box we create.</p>
+        <p>It began in 1906, when H.R. Drake &amp; Sons first crafted boxes in the very factory we still call home today. As decades passed, the company evolved, becoming part of Paul T. Freund Corp. and growing through the integration of many respected box-making businesses&mdash;all united under one roof along the historic Erie Canal in Palmyra, New York.</p>
+        <p>More than a century later, while names and ownership have changed, one thing has remained constant: who we are.</p>
+        <p>We are box makers.</p>
+        <p>Craftsmen who believe the contents deserve respect&mdash;and that the box should reflect their value.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="na-story-section na-story-section--alt">
+    <div class="na-container">
+      <div style="text-align: center; margin-bottom: 4rem;">
+        <span class="na-kraft-line na-kraft-line--center" style="margin-bottom: 1.5rem;"></span>
+        <h2 style="font-family: var(--na-font-display); font-size: 2rem; font-style: italic; font-weight: 400; color: var(--na-charcoal);">120 Years of Craft</h2>
+      </div>
+      <div class="na-story-timeline">
+        <div class="na-story-timeline__item">
+          <div class="na-story-timeline__year">1906</div>
+          <div class="na-story-timeline__desc">HR Drake &amp; Sons Company begins manufacturing boxes in Palmyra, New York, on the banks of the Erie Canal. The factory that still stands today.</div>
+        </div>
+        <div class="na-story-timeline__item">
+          <div class="na-story-timeline__year">1950s</div>
+          <div class="na-story-timeline__desc">Paul T. Freund Corp. acquires HR Drake &amp; Sons, beginning a decades-long consolidation of box-making expertise under one roof.</div>
+        </div>
+        <div class="na-story-timeline__item">
+          <div class="na-story-timeline__year">1970s</div>
+          <div class="na-story-timeline__desc">The factory expands, acquiring and integrating multiple specialty box makers. Acid-free and archival-grade materials become a core focus.</div>
+        </div>
+        <div class="na-story-timeline__item">
+          <div class="na-story-timeline__year">2000s</div>
+          <div class="na-story-timeline__desc">Pulp Packaging Inc. consolidates all operations into the historic Palmyra facility. The company now produces a full range of premium packaging and archival products.</div>
+        </div>
+        <div class="na-story-timeline__item">
+          <div class="na-story-timeline__year">2018</div>
+          <div class="na-story-timeline__desc">Native Archival launches, bringing factory-direct archival products to photographers, collectors, and archivists. Direct-to-consumer pricing. Made in the USA.</div>
+        </div>
+        <div class="na-story-timeline__item">
+          <div class="na-story-timeline__year">Today</div>
+          <div class="na-story-timeline__desc">Over 120 years of box-making heritage. Still family-operated. Still made in the same factory. Still protecting what matters.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="na-story-section na-section--ivory">
+    <div class="na-container">
+      <div style="text-align: center; margin-bottom: 4rem;">
+        <span class="na-kraft-line na-kraft-line--center" style="margin-bottom: 1.5rem;"></span>
+        <h2 style="font-family: var(--na-font-display); font-size: 2rem; font-style: italic; font-weight: 400; color: var(--na-charcoal);">What We Stand For</h2>
+      </div>
+      <div class="na-story-values">
+        <div class="na-story-value">
+          <div class="na-story-value__icon">&#9670;</div>
+          <h3 class="na-story-value__title">Made in the USA</h3>
+          <p class="na-story-value__text">Every product is manufactured in our Palmyra, New York factory. We don't outsource. We don't cut corners. American made, from start to finish.</p>
+        </div>
+        <div class="na-story-value">
+          <div class="na-story-value__icon">&#9670;</div>
+          <h3 class="na-story-value__title">Archival Quality</h3>
+          <p class="na-story-value__text">Acid-free, lignin-free, PAT-tested. Our materials meet the standards set by museums and professional archivists for long-term preservation.</p>
+        </div>
+        <div class="na-story-value">
+          <div class="na-story-value__icon">&#9670;</div>
+          <h3 class="na-story-value__title">Direct to You</h3>
+          <p class="na-story-value__text">No middlemen. Factory-direct pricing means you get professional-grade archival products at a fair price, shipped straight from our facility.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="na-cta">
+    <div class="na-container">
+      <div class="na-cta__inner">
+        <span class="na-kraft-line na-kraft-line--center" style="margin-bottom: 2rem;"></span>
+        <h2>Protecting Your Memories Starts Here.</h2>
+        <p class="na-cta__subtitle">Join thousands of collectors, photographers, and archivists.</p>
+        <div class="na-cta__form">
+          <input type="email" placeholder="YOUR EMAIL ADDRESS" class="na-cta__input">
+          <button class="na-btn na-btn--primary">Subscribe</button>
+        </div>
+        <a href="#" class="na-cta__link" onclick="switchView('shop'); return false;">Shop All Products</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="na-footer">
+    <div class="na-container">
+      <div class="na-footer__inner">
+        <div class="na-footer__brand">
+          <h3 class="na-header__logo" style="margin-bottom: 1rem;">Native Archival</h3>
+          <p>Professional archival and preservation products. Made in the USA.</p>
+          <div style="margin-top: 1.5rem;"><span class="na-kraft-line"></span></div>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Products</h4>
+          <ul class="na-footer__links">
+            <li><a href="#">Albums</a></li>
+            <li><a href="#">Photo Storage</a></li>
+            <li><a href="#">Print Preservers</a></li>
+            <li><a href="#">Portfolios</a></li>
+            <li><a href="#">Card Collectors</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Company</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('story'); return false;">Our Story</a></li>
+            <li><a href="#" onclick="switchView('blog'); return false;">Blog</a></li>
+            <li><a href="#" onclick="switchView('contact'); return false;">Contact</a></li>
+            <li><a href="#" onclick="switchView('wholesale'); return false;">Wholesale</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Resources</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('shipping'); return false;">Shipping &amp; Returns</a></li>
+            <li><a href="#" onclick="switchView('privacy'); return false;">Privacy Policy</a></li>
+            <li><a href="#" onclick="switchView('terms'); return false;">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Connect</h4>
+          <ul class="na-footer__links">
+            <li><a href="https://instagram.com/nativearchival" target="_blank">Instagram</a></li>
+            <li><a href="https://facebook.com/nativearchival" target="_blank">Facebook</a></li>
+          </ul>
+          <div class="na-footer__contact" style="margin-top: 2rem;">
+            <p>custservice@nativearchival.com</p>
+            <p>315-502-4265</p>
+            <p style="margin-top: 0.5rem;">P.O. Box 475</p>
+            <p>Palmyra, NY 14522</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="na-footer__bottom">
+      <div class="na-container">
+        <p>&copy; 2026 Native Archival. Made in the USA. Operated by Pulp Packaging, Inc.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ============================================================
+     BLOG LISTING VIEW
+     ============================================================ -->
+<div class="na-preview-view" id="view-blog">
+
+  <header class="na-header">
+    <div class="na-container">
+      <div class="na-header__inner">
+        <div class="na-header__brand">
+          <a href="#" class="na-header__logo" onclick="switchView('homepage'); return false;">Native Archival</a>
+          <div class="na-header__social">
+            <a href="https://facebook.com/nativearchival" target="_blank" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="https://instagram.com/nativearchival" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          </div>
+        </div>
+        <nav class="na-header__nav">
+          <a href="#" onclick="switchView('homepage'); return false;">Home</a>
+          <a href="#" onclick="switchView('shop'); return false;">Shop</a>
+          <a href="#" onclick="switchView('blog'); return false;">Blog</a>
+          <a href="#" onclick="switchView('story'); return false;">Our Story</a>
+        </nav>
+        <div class="na-header__actions">
+          <a href="#" class="na-header__login" onclick="switchView('login'); return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+            <span class="na-header__login-text">Login</span>
+          </a>
+          <a href="#" class="na-header__cart">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" /></svg>
+            <span class="na-header__cart-count">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="na-shop-header">
+    <div class="na-container">
+      <span class="na-kraft-line na-kraft-line--center" style="margin-bottom: 1.5rem;"></span>
+      <h1>The Archival Journal</h1>
+      <p>Insights on preservation, archival materials, and protecting what matters.</p>
+    </div>
+  </div>
+
+  <div class="na-section na-section--ivory">
+    <div class="na-container">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem;">
+        <article>
+          <div style="aspect-ratio: 16/9; background: var(--na-charcoal); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;">
+            <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver);">Archival Journal</span>
+          </div>
+          <span class="na-kraft-line" style="width: 1.5rem; margin-bottom: 1rem;"></span>
+          <p style="font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver); margin-bottom: 0.5rem;">March 28, 2026</p>
+          <h3 style="font-size: 0.875rem; font-weight: 500; text-transform: uppercase; letter-spacing: var(--na-tracking-wide); margin-bottom: 0.75rem; line-height: 1.6;"><a href="#" onclick="showBlogPost('store-photos'); return false;" style="color: inherit;">How to Store Photos So They Last 100 Years</a></h3>
+          <p style="font-size: 0.75rem; line-height: 1.6; color: var(--na-silver); margin-bottom: 1rem;">Learn the archival best practices professionals use to preserve photographs for generations.</p>
+          <a href="#" onclick="showBlogPost('store-photos'); return false;" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-kraft);">Read More &rarr;</a>
+        </article>
+        <article>
+          <div style="aspect-ratio: 16/9; background: var(--na-charcoal); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;">
+            <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver);">Archival Journal</span>
+          </div>
+          <span class="na-kraft-line" style="width: 1.5rem; margin-bottom: 1rem;"></span>
+          <p style="font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver); margin-bottom: 0.5rem;">Coming Soon</p>
+          <h3 style="font-size: 0.875rem; font-weight: 500; text-transform: uppercase; letter-spacing: var(--na-tracking-wide); margin-bottom: 0.75rem; line-height: 1.6;"><a href="#" onclick="showBlogPost('acid-free'); return false;" style="color: inherit;">What Does Acid-Free Actually Mean?</a></h3>
+          <p style="font-size: 0.75rem; line-height: 1.6; color: var(--na-silver); margin-bottom: 1rem;">Understanding the science behind archival materials and why pH levels matter for long-term preservation.</p>
+          <a href="#" onclick="showBlogPost('acid-free'); return false;" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-kraft);">Read More &rarr;</a>
+        </article>
+        <article>
+          <div style="aspect-ratio: 16/9; background: var(--na-charcoal); display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem;">
+            <span style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver);">Archival Journal</span>
+          </div>
+          <span class="na-kraft-line" style="width: 1.5rem; margin-bottom: 1rem;"></span>
+          <p style="font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver); margin-bottom: 0.5rem;">Coming Soon</p>
+          <h3 style="font-size: 0.875rem; font-weight: 500; text-transform: uppercase; letter-spacing: var(--na-tracking-wide); margin-bottom: 0.75rem; line-height: 1.6;"><a href="#" onclick="showBlogPost('card-collector'); return false;" style="color: inherit;">Card Collector's Guide to Archival Storage</a></h3>
+          <p style="font-size: 0.75rem; line-height: 1.6; color: var(--na-silver); margin-bottom: 1rem;">Everything you need to know about protecting graded cards and collectibles with proper archival storage solutions.</p>
+          <a href="#" onclick="showBlogPost('card-collector'); return false;" style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-kraft);">Read More &rarr;</a>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <section class="na-cta">
+    <div class="na-container">
+      <div class="na-cta__inner">
+        <span class="na-kraft-line na-kraft-line--center" style="margin-bottom: 2rem;"></span>
+        <h2>Protecting Your Memories Starts Here.</h2>
+        <p class="na-cta__subtitle">Join thousands of collectors, photographers, and archivists.</p>
+        <div class="na-cta__form">
+          <input type="email" placeholder="YOUR EMAIL ADDRESS" class="na-cta__input">
+          <button class="na-btn na-btn--primary">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="na-footer">
+    <div class="na-container">
+      <div class="na-footer__inner">
+        <div class="na-footer__brand">
+          <h3 class="na-header__logo" style="margin-bottom: 1rem;">Native Archival</h3>
+          <p>Professional archival and preservation products. Made in the USA.</p>
+          <div style="margin-top: 1.5rem;"><span class="na-kraft-line"></span></div>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Products</h4>
+          <ul class="na-footer__links">
+            <li><a href="#">Albums</a></li>
+            <li><a href="#">Photo Storage</a></li>
+            <li><a href="#">Print Preservers</a></li>
+            <li><a href="#">Portfolios</a></li>
+            <li><a href="#">Card Collectors</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Company</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('story'); return false;">Our Story</a></li>
+            <li><a href="#" onclick="switchView('blog'); return false;">Blog</a></li>
+            <li><a href="#" onclick="switchView('contact'); return false;">Contact</a></li>
+            <li><a href="#" onclick="switchView('wholesale'); return false;">Wholesale</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Resources</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('shipping'); return false;">Shipping &amp; Returns</a></li>
+            <li><a href="#" onclick="switchView('privacy'); return false;">Privacy Policy</a></li>
+            <li><a href="#" onclick="switchView('terms'); return false;">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Connect</h4>
+          <ul class="na-footer__links">
+            <li><a href="https://instagram.com/nativearchival" target="_blank">Instagram</a></li>
+            <li><a href="https://facebook.com/nativearchival" target="_blank">Facebook</a></li>
+          </ul>
+          <div class="na-footer__contact" style="margin-top: 2rem;">
+            <p>custservice@nativearchival.com</p>
+            <p>315-502-4265</p>
+            <p style="margin-top: 0.5rem;">P.O. Box 475</p>
+            <p>Palmyra, NY 14522</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="na-footer__bottom">
+      <div class="na-container">
+        <p>&copy; 2026 Native Archival. Made in the USA. Operated by Pulp Packaging, Inc.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ============================================================
+     BLOG POST VIEW
+     ============================================================ -->
+<div class="na-preview-view" id="view-blogpost">
+
+  <header class="na-header">
+    <div class="na-container">
+      <div class="na-header__inner">
+        <div class="na-header__brand">
+          <a href="#" class="na-header__logo" onclick="switchView('homepage'); return false;">Native Archival</a>
+          <div class="na-header__social">
+            <a href="https://facebook.com/nativearchival" target="_blank" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="https://instagram.com/nativearchival" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          </div>
+        </div>
+        <nav class="na-header__nav">
+          <a href="#" onclick="switchView('homepage'); return false;">Home</a>
+          <a href="#" onclick="switchView('shop'); return false;">Shop</a>
+          <a href="#" onclick="switchView('blog'); return false;">Blog</a>
+          <a href="#" onclick="switchView('story'); return false;">Our Story</a>
+        </nav>
+        <div class="na-header__actions">
+          <a href="#" class="na-header__login" onclick="switchView('login'); return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+            <span class="na-header__login-text">Login</span>
+          </a>
+          <a href="#" class="na-header__cart">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" /></svg>
+            <span class="na-header__cart-count">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="na-shop-header">
+    <div class="na-container">
+      <span class="na-kraft-line na-kraft-line--center" style="margin-bottom: 1.5rem;"></span>
+      <h1>The Archival Journal</h1>
+    </div>
+  </div>
+
+  <div class="na-section na-section--ivory">
+    <div class="na-container">
+      <div style="max-width: 48rem; margin: 0 auto; padding: 2rem 0;">
+        <a href="#" onclick="switchView('blog'); return false;" style="font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-kraft); display: inline-block; margin-bottom: 2rem;">&larr; Back to Journal</a>
+        <div id="blogpost-content"></div>
+      </div>
+    </div>
+  </div>
+
+  <section class="na-cta">
+    <div class="na-container">
+      <div class="na-cta__inner">
+        <span class="na-kraft-line na-kraft-line--center" style="margin-bottom: 2rem;"></span>
+        <h2>Protecting Your Memories Starts Here.</h2>
+        <p class="na-cta__subtitle">Join thousands of collectors, photographers, and archivists.</p>
+        <div class="na-cta__form">
+          <input type="email" placeholder="YOUR EMAIL ADDRESS" class="na-cta__input">
+          <button class="na-btn na-btn--primary">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="na-footer">
+    <div class="na-container">
+      <div class="na-footer__inner">
+        <div class="na-footer__brand">
+          <h3 class="na-header__logo" style="margin-bottom: 1rem;">Native Archival</h3>
+          <p>Professional archival and preservation products. Made in the USA.</p>
+          <div style="margin-top: 1.5rem;"><span class="na-kraft-line"></span></div>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Products</h4>
+          <ul class="na-footer__links">
+            <li><a href="#">Albums</a></li>
+            <li><a href="#">Photo Storage</a></li>
+            <li><a href="#">Print Preservers</a></li>
+            <li><a href="#">Portfolios</a></li>
+            <li><a href="#">Card Collectors</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Company</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('story'); return false;">Our Story</a></li>
+            <li><a href="#" onclick="switchView('blog'); return false;">Blog</a></li>
+            <li><a href="#" onclick="switchView('contact'); return false;">Contact</a></li>
+            <li><a href="#" onclick="switchView('wholesale'); return false;">Wholesale</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Resources</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('shipping'); return false;">Shipping &amp; Returns</a></li>
+            <li><a href="#" onclick="switchView('privacy'); return false;">Privacy Policy</a></li>
+            <li><a href="#" onclick="switchView('terms'); return false;">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Connect</h4>
+          <ul class="na-footer__links">
+            <li><a href="https://instagram.com/nativearchival" target="_blank">Instagram</a></li>
+            <li><a href="https://facebook.com/nativearchival" target="_blank">Facebook</a></li>
+          </ul>
+          <div class="na-footer__contact" style="margin-top: 2rem;">
+            <p>custservice@nativearchival.com</p>
+            <p>315-502-4265</p>
+            <p style="margin-top: 0.5rem;">P.O. Box 475</p>
+            <p>Palmyra, NY 14522</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="na-footer__bottom">
+      <div class="na-container">
+        <p>&copy; 2026 Native Archival. Made in the USA. Operated by Pulp Packaging, Inc.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ============================================================
+     SHIPPING & RETURNS
+     ============================================================ -->
+<div class="na-preview-view" id="view-shipping">
+
+  <header class="na-header">
+    <div class="na-container">
+      <div class="na-header__inner">
+        <div class="na-header__brand">
+          <a href="#" class="na-header__logo" onclick="switchView('homepage'); return false;">Native Archival</a>
+          <div class="na-header__social">
+            <a href="https://facebook.com/nativearchival" target="_blank" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="https://instagram.com/nativearchival" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          </div>
+        </div>
+        <nav class="na-header__nav">
+          <a href="#" onclick="switchView('homepage'); return false;">Home</a>
+          <a href="#" onclick="switchView('shop'); return false;">Shop</a>
+          <a href="#" onclick="switchView('blog'); return false;">Blog</a>
+          <a href="#" onclick="switchView('story'); return false;">Our Story</a>
+        </nav>
+        <div class="na-header__actions">
+          <a href="#" class="na-header__login" onclick="switchView('login'); return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+            <span class="na-header__login-text">Login</span>
+          </a>
+          <a href="#" class="na-header__cart">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" /></svg>
+            <span class="na-header__cart-count">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="na-policy-hero">
+    <div class="na-container">
+      <span class="na-kraft-line na-kraft-line--center" style="margin-bottom: 1.5rem;"></span>
+      <span class="na-policy-hero__eyebrow">Policy</span>
+      <h1 class="na-policy-hero__title">Shipping &amp; Returns</h1>
+      <p class="na-policy-hero__updated">Last updated April 2026</p>
+    </div>
+  </div>
+
+  <div class="na-policy-body">
+
+    <h2>Shipping</h2>
+
+    <p>All orders are processed and shipped from our factory in Palmyra, New York. We typically process orders within 1&ndash;2 business days. During peak seasons or promotional periods, processing may take an additional 1&ndash;2 days.</p>
+
+    <h3>Domestic Shipping (United States)</h3>
+    <p><strong>Standard Shipping:</strong> 5&ndash;7 business days. Rates calculated at checkout based on weight and destination.</p>
+    <p><strong>Expedited Shipping:</strong> 2&ndash;3 business days. Available at checkout for an additional fee.</p>
+    <p><strong>Free Shipping:</strong> Available on orders over $75 within the contiguous United States.</p>
+
+    <h3>International Shipping</h3>
+    <p>We currently ship to Canada and select international destinations. International shipping rates and delivery estimates are calculated at checkout. Please note that international orders may be subject to customs duties and import taxes, which are the responsibility of the recipient.</p>
+
+    <h3>Order Tracking</h3>
+    <p>Once your order ships, you will receive a confirmation email with a tracking number. You can use this number to monitor your shipment&rsquo;s progress at any time.</p>
+
+    <div class="na-policy-callout">
+      <p><strong>Shipping from our factory direct to you</strong></p>
+      <p>Because we manufacture and ship from the same facility, your order goes straight from our production floor to your door &mdash; no middlemen, no warehouses, no unnecessary handling.</p>
+    </div>
+
+    <h2>Returns &amp; Exchanges</h2>
+
+    <p>We stand behind the quality of every product we make. If you are not completely satisfied with your purchase, we are happy to help.</p>
+
+    <h3>Return Window</h3>
+    <p>You may return unused, unopened items within <strong>30 days</strong> of delivery for a full refund. Items must be in their original condition and packaging.</p>
+
+    <h3>How to Initiate a Return</h3>
+    <p>To start a return, please contact us at <a href="mailto:custservice@nativearchival.com">custservice@nativearchival.com</a> with your order number and reason for return. We will provide you with a return shipping address and any further instructions.</p>
+
+    <h3>Refunds</h3>
+    <p>Once we receive and inspect your return, we will process your refund within 5&ndash;7 business days. Refunds are issued to the original payment method. Please allow an additional 3&ndash;5 business days for the refund to appear on your statement.</p>
+
+    <h3>Damaged or Defective Items</h3>
+    <p>If your order arrives damaged or you received a defective product, please contact us within 7 days of delivery with photos of the damage. We will arrange a replacement or full refund at no additional cost to you, including return shipping.</p>
+
+    <h3>Non-Returnable Items</h3>
+    <p>Custom or personalized orders cannot be returned unless they arrive damaged or defective. Sale items are final sale unless otherwise noted.</p>
+
+    <div class="na-policy-callout">
+      <p><strong>Questions?</strong></p>
+      <p>Contact our customer service team at <a href="mailto:custservice@nativearchival.com" style="color: var(--na-kraft);">custservice@nativearchival.com</a> or call <strong>315-502-4265</strong>. We&rsquo;re here to help.</p>
+    </div>
+
+  </div>
+
+  <div class="na-policy-back">
+    <a href="#" onclick="switchView('homepage'); return false;">&larr; Back to Home</a>
+  </div>
+
+  <footer class="na-footer">
+    <div class="na-container">
+      <div class="na-footer__inner">
+        <div class="na-footer__brand">
+          <h3 class="na-header__logo" style="margin-bottom: 1rem;">Native Archival</h3>
+          <p>Professional archival and preservation products. Made in the USA.</p>
+          <div style="margin-top: 1.5rem;"><span class="na-kraft-line"></span></div>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Products</h4>
+          <ul class="na-footer__links">
+            <li><a href="#">Albums</a></li>
+            <li><a href="#">Photo Storage</a></li>
+            <li><a href="#">Print Preservers</a></li>
+            <li><a href="#">Portfolios</a></li>
+            <li><a href="#">Card Collectors</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Company</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('story'); return false;">Our Story</a></li>
+            <li><a href="#" onclick="switchView('blog'); return false;">Blog</a></li>
+            <li><a href="#" onclick="switchView('contact'); return false;">Contact</a></li>
+            <li><a href="#" onclick="switchView('wholesale'); return false;">Wholesale</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Resources</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('shipping'); return false;">Shipping &amp; Returns</a></li>
+            <li><a href="#" onclick="switchView('privacy'); return false;">Privacy Policy</a></li>
+            <li><a href="#" onclick="switchView('terms'); return false;">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Connect</h4>
+          <ul class="na-footer__links">
+            <li><a href="https://instagram.com/nativearchival" target="_blank">Instagram</a></li>
+            <li><a href="https://facebook.com/nativearchival" target="_blank">Facebook</a></li>
+          </ul>
+          <div class="na-footer__contact" style="margin-top: 2rem;">
+            <p>custservice@nativearchival.com</p>
+            <p>315-502-4265</p>
+            <p style="margin-top: 0.5rem;">P.O. Box 475</p>
+            <p>Palmyra, NY 14522</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="na-footer__bottom">
+      <div class="na-container">
+        <p>&copy; 2026 Native Archival. Made in the USA. Operated by Pulp Packaging, Inc.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ============================================================
+     PRIVACY POLICY
+     ============================================================ -->
+<div class="na-preview-view" id="view-privacy">
+
+  <header class="na-header">
+    <div class="na-container">
+      <div class="na-header__inner">
+        <div class="na-header__brand">
+          <a href="#" class="na-header__logo" onclick="switchView('homepage'); return false;">Native Archival</a>
+          <div class="na-header__social">
+            <a href="https://facebook.com/nativearchival" target="_blank" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="https://instagram.com/nativearchival" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          </div>
+        </div>
+        <nav class="na-header__nav">
+          <a href="#" onclick="switchView('homepage'); return false;">Home</a>
+          <a href="#" onclick="switchView('shop'); return false;">Shop</a>
+          <a href="#" onclick="switchView('blog'); return false;">Blog</a>
+          <a href="#" onclick="switchView('story'); return false;">Our Story</a>
+        </nav>
+        <div class="na-header__actions">
+          <a href="#" class="na-header__login" onclick="switchView('login'); return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+            <span class="na-header__login-text">Login</span>
+          </a>
+          <a href="#" class="na-header__cart">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" /></svg>
+            <span class="na-header__cart-count">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="na-policy-hero">
+    <div class="na-container">
+      <span class="na-kraft-line na-kraft-line--center" style="margin-bottom: 1.5rem;"></span>
+      <span class="na-policy-hero__eyebrow">Policy</span>
+      <h1 class="na-policy-hero__title">Privacy Policy</h1>
+      <p class="na-policy-hero__updated">Last updated April 2026</p>
+    </div>
+  </div>
+
+  <div class="na-policy-body">
+
+    <h2>Introduction</h2>
+    <p>Native Archival, a brand of Pulp Packaging, Inc. (&ldquo;we,&rdquo; &ldquo;us,&rdquo; or &ldquo;our&rdquo;), is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website at nativearchival.com and make purchases from us.</p>
+
+    <h2>Information We Collect</h2>
+
+    <h3>Information You Provide</h3>
+    <p>When you place an order, create an account, or contact us, we may collect your name, email address, shipping and billing address, phone number, and payment information. Payment processing is handled by secure third-party processors &mdash; we do not store your full credit card number on our servers.</p>
+
+    <h3>Information Collected Automatically</h3>
+    <p>When you visit our website, we may automatically collect certain information about your device and browsing activity, including your IP address, browser type, operating system, referring URLs, pages viewed, and the dates and times of your visits. We use cookies and similar tracking technologies to collect this information.</p>
+
+    <h2>How We Use Your Information</h2>
+    <p>We use the information we collect to process and fulfill your orders, communicate with you about your purchases, send you marketing communications (with your consent), improve our website and product offerings, prevent fraudulent activity, and comply with legal obligations.</p>
+
+    <h2>Sharing Your Information</h2>
+    <p>We do not sell, rent, or trade your personal information to third parties for their marketing purposes. We may share your information with service providers who assist us in operating our website, processing payments, and delivering orders. These providers are contractually obligated to protect your information and use it only for the purposes we specify.</p>
+
+    <h2>Cookies</h2>
+    <p>Our website uses cookies to enhance your browsing experience, remember your preferences, and analyze site traffic. You can control cookie settings through your browser preferences. Disabling cookies may limit some features of our website.</p>
+
+    <h2>Data Security</h2>
+    <p>We implement industry-standard security measures to protect your personal information, including SSL encryption for all data transmitted between your browser and our servers. However, no method of electronic transmission or storage is completely secure, and we cannot guarantee absolute security.</p>
+
+    <h2>Your Rights</h2>
+    <p>Depending on your location, you may have the right to access, correct, or delete the personal information we hold about you. You may also have the right to opt out of marketing communications at any time by clicking the unsubscribe link in any marketing email or by contacting us directly.</p>
+
+    <h2>Children&rsquo;s Privacy</h2>
+    <p>Our website and services are not directed to individuals under the age of 13. We do not knowingly collect personal information from children under 13. If we become aware that we have collected such information, we will take steps to delete it promptly.</p>
+
+    <h2>Changes to This Policy</h2>
+    <p>We may update this Privacy Policy from time to time. Any changes will be posted on this page with an updated revision date. We encourage you to review this policy periodically.</p>
+
+    <div class="na-policy-callout">
+      <p><strong>Questions about your privacy?</strong></p>
+      <p>Contact us at <a href="mailto:custservice@nativearchival.com" style="color: var(--na-kraft);">custservice@nativearchival.com</a> or write to us at P.O. Box 475, Palmyra, NY 14522.</p>
+    </div>
+
+  </div>
+
+  <div class="na-policy-back">
+    <a href="#" onclick="switchView('homepage'); return false;">&larr; Back to Home</a>
+  </div>
+
+  <footer class="na-footer">
+    <div class="na-container">
+      <div class="na-footer__inner">
+        <div class="na-footer__brand">
+          <h3 class="na-header__logo" style="margin-bottom: 1rem;">Native Archival</h3>
+          <p>Professional archival and preservation products. Made in the USA.</p>
+          <div style="margin-top: 1.5rem;"><span class="na-kraft-line"></span></div>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Products</h4>
+          <ul class="na-footer__links">
+            <li><a href="#">Albums</a></li>
+            <li><a href="#">Photo Storage</a></li>
+            <li><a href="#">Print Preservers</a></li>
+            <li><a href="#">Portfolios</a></li>
+            <li><a href="#">Card Collectors</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Company</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('story'); return false;">Our Story</a></li>
+            <li><a href="#" onclick="switchView('blog'); return false;">Blog</a></li>
+            <li><a href="#" onclick="switchView('contact'); return false;">Contact</a></li>
+            <li><a href="#" onclick="switchView('wholesale'); return false;">Wholesale</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Resources</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('shipping'); return false;">Shipping &amp; Returns</a></li>
+            <li><a href="#" onclick="switchView('privacy'); return false;">Privacy Policy</a></li>
+            <li><a href="#" onclick="switchView('terms'); return false;">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Connect</h4>
+          <ul class="na-footer__links">
+            <li><a href="https://instagram.com/nativearchival" target="_blank">Instagram</a></li>
+            <li><a href="https://facebook.com/nativearchival" target="_blank">Facebook</a></li>
+          </ul>
+          <div class="na-footer__contact" style="margin-top: 2rem;">
+            <p>custservice@nativearchival.com</p>
+            <p>315-502-4265</p>
+            <p style="margin-top: 0.5rem;">P.O. Box 475</p>
+            <p>Palmyra, NY 14522</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="na-footer__bottom">
+      <div class="na-container">
+        <p>&copy; 2026 Native Archival. Made in the USA. Operated by Pulp Packaging, Inc.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ============================================================
+     TERMS OF SERVICE
+     ============================================================ -->
+<div class="na-preview-view" id="view-terms">
+
+  <header class="na-header">
+    <div class="na-container">
+      <div class="na-header__inner">
+        <div class="na-header__brand">
+          <a href="#" class="na-header__logo" onclick="switchView('homepage'); return false;">Native Archival</a>
+          <div class="na-header__social">
+            <a href="https://facebook.com/nativearchival" target="_blank" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="https://instagram.com/nativearchival" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          </div>
+        </div>
+        <nav class="na-header__nav">
+          <a href="#" onclick="switchView('homepage'); return false;">Home</a>
+          <a href="#" onclick="switchView('shop'); return false;">Shop</a>
+          <a href="#" onclick="switchView('blog'); return false;">Blog</a>
+          <a href="#" onclick="switchView('story'); return false;">Our Story</a>
+        </nav>
+        <div class="na-header__actions">
+          <a href="#" class="na-header__login" onclick="switchView('login'); return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+            <span class="na-header__login-text">Login</span>
+          </a>
+          <a href="#" class="na-header__cart">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" /></svg>
+            <span class="na-header__cart-count">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="na-policy-hero">
+    <div class="na-container">
+      <span class="na-kraft-line na-kraft-line--center" style="margin-bottom: 1.5rem;"></span>
+      <span class="na-policy-hero__eyebrow">Policy</span>
+      <h1 class="na-policy-hero__title">Terms of Service</h1>
+      <p class="na-policy-hero__updated">Last updated April 2026</p>
+    </div>
+  </div>
+
+  <div class="na-policy-body">
+
+    <h2>Agreement to Terms</h2>
+    <p>By accessing or using the Native Archival website at nativearchival.com, you agree to be bound by these Terms of Service. If you do not agree to these terms, please do not use our website or purchase our products. Native Archival is a brand of Pulp Packaging, Inc.</p>
+
+    <h2>Products &amp; Ordering</h2>
+    <p>All products displayed on our website are subject to availability. We reserve the right to limit quantities and to discontinue any product at any time without notice. Prices are listed in US dollars and are subject to change without prior notice. We make every effort to ensure that product descriptions and images are accurate, but we do not warrant that descriptions or other content on the site are error-free.</p>
+
+    <h3>Order Acceptance</h3>
+    <p>Placing an order on our website constitutes an offer to purchase. We reserve the right to accept or decline any order for any reason, including product availability, errors in pricing or product information, or suspected fraudulent activity.</p>
+
+    <h3>Payment</h3>
+    <p>We accept major credit cards and other payment methods as indicated at checkout. By submitting payment information, you represent that you are authorized to use the designated payment method. All payments are processed through secure third-party payment processors.</p>
+
+    <h2>Shipping &amp; Returns</h2>
+    <p>Shipping and return policies are detailed on our <a href="#" onclick="switchView('shipping'); return false;">Shipping &amp; Returns</a> page and are incorporated into these Terms by reference.</p>
+
+    <h2>Intellectual Property</h2>
+    <p>All content on the Native Archival website &mdash; including text, graphics, logos, images, product designs, and software &mdash; is the property of Pulp Packaging, Inc. or its licensors and is protected by United States and international copyright, trademark, and other intellectual property laws. You may not reproduce, distribute, modify, or create derivative works from any content on this website without our prior written consent.</p>
+
+    <h2>User Accounts</h2>
+    <p>If you create an account on our website, you are responsible for maintaining the confidentiality of your account credentials and for all activity that occurs under your account. You agree to provide accurate and complete information when creating your account and to update your information as necessary. We reserve the right to suspend or terminate accounts at our discretion.</p>
+
+    <h2>Limitation of Liability</h2>
+    <p>To the fullest extent permitted by law, Native Archival and Pulp Packaging, Inc. shall not be liable for any indirect, incidental, special, consequential, or punitive damages arising out of or related to your use of our website or products. Our total liability for any claim arising from your use of the website or purchase of products shall not exceed the amount you paid for the applicable product.</p>
+
+    <h2>Indemnification</h2>
+    <p>You agree to indemnify and hold harmless Pulp Packaging, Inc., its officers, directors, employees, and agents from any claims, damages, losses, or expenses arising out of your violation of these Terms or your use of our website.</p>
+
+    <h2>Governing Law</h2>
+    <p>These Terms of Service are governed by and construed in accordance with the laws of the State of New York, without regard to its conflict of law provisions. Any disputes arising from these Terms shall be resolved in the state or federal courts located in Wayne County, New York.</p>
+
+    <h2>Changes to These Terms</h2>
+    <p>We reserve the right to update or modify these Terms of Service at any time. Changes will be posted on this page with an updated effective date. Your continued use of the website following any changes constitutes acceptance of the revised terms.</p>
+
+    <div class="na-policy-callout">
+      <p><strong>Questions about these terms?</strong></p>
+      <p>Contact us at <a href="mailto:custservice@nativearchival.com" style="color: var(--na-kraft);">custservice@nativearchival.com</a> or write to Pulp Packaging, Inc., P.O. Box 475, Palmyra, NY 14522.</p>
+    </div>
+
+  </div>
+
+  <div class="na-policy-back">
+    <a href="#" onclick="switchView('homepage'); return false;">&larr; Back to Home</a>
+  </div>
+
+  <footer class="na-footer">
+    <div class="na-container">
+      <div class="na-footer__inner">
+        <div class="na-footer__brand">
+          <h3 class="na-header__logo" style="margin-bottom: 1rem;">Native Archival</h3>
+          <p>Professional archival and preservation products. Made in the USA.</p>
+          <div style="margin-top: 1.5rem;"><span class="na-kraft-line"></span></div>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Products</h4>
+          <ul class="na-footer__links">
+            <li><a href="#">Albums</a></li>
+            <li><a href="#">Photo Storage</a></li>
+            <li><a href="#">Print Preservers</a></li>
+            <li><a href="#">Portfolios</a></li>
+            <li><a href="#">Card Collectors</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Company</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('story'); return false;">Our Story</a></li>
+            <li><a href="#" onclick="switchView('blog'); return false;">Blog</a></li>
+            <li><a href="#" onclick="switchView('contact'); return false;">Contact</a></li>
+            <li><a href="#" onclick="switchView('wholesale'); return false;">Wholesale</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Resources</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('shipping'); return false;">Shipping &amp; Returns</a></li>
+            <li><a href="#" onclick="switchView('privacy'); return false;">Privacy Policy</a></li>
+            <li><a href="#" onclick="switchView('terms'); return false;">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Connect</h4>
+          <ul class="na-footer__links">
+            <li><a href="https://instagram.com/nativearchival" target="_blank">Instagram</a></li>
+            <li><a href="https://facebook.com/nativearchival" target="_blank">Facebook</a></li>
+          </ul>
+          <div class="na-footer__contact" style="margin-top: 2rem;">
+            <p>custservice@nativearchival.com</p>
+            <p>315-502-4265</p>
+            <p style="margin-top: 0.5rem;">P.O. Box 475</p>
+            <p>Palmyra, NY 14522</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="na-footer__bottom">
+      <div class="na-container">
+        <p>&copy; 2026 Native Archival. Made in the USA. Operated by Pulp Packaging, Inc.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ============================================================
+     CONTACT
+     ============================================================ -->
+<div class="na-preview-view" id="view-contact">
+
+  <header class="na-header">
+    <div class="na-container">
+      <div class="na-header__inner">
+        <div class="na-header__brand">
+          <a href="#" class="na-header__logo" onclick="switchView('homepage'); return false;">Native Archival</a>
+          <div class="na-header__social">
+            <a href="https://facebook.com/nativearchival" target="_blank" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="https://instagram.com/nativearchival" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          </div>
+        </div>
+        <nav class="na-header__nav">
+          <a href="#" onclick="switchView('homepage'); return false;">Home</a>
+          <a href="#" onclick="switchView('shop'); return false;">Shop</a>
+          <a href="#" onclick="switchView('blog'); return false;">Blog</a>
+          <a href="#" onclick="switchView('story'); return false;">Our Story</a>
+        </nav>
+        <div class="na-header__actions">
+          <a href="#" class="na-header__login" onclick="switchView('login'); return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+            <span class="na-header__login-text">Login</span>
+          </a>
+          <a href="#" class="na-header__cart">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" /></svg>
+            <span class="na-header__cart-count">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="na-policy-hero">
+    <div class="na-container">
+      <span class="na-kraft-line na-kraft-line--center" style="margin-bottom: 1.5rem;"></span>
+      <span class="na-policy-hero__eyebrow">Get in Touch</span>
+      <h1 class="na-policy-hero__title">Contact Us</h1>
+      <p class="na-policy-hero__updated">We&rsquo;d love to hear from you</p>
+    </div>
+  </div>
+
+  <div class="na-policy-body">
+
+    <p>Have a question about our products, need help with an order, or just want to say hello? Fill out the form below and we&rsquo;ll get back to you within one business day.</p>
+
+    <form onsubmit="event.preventDefault(); alert('Thank you for your message! We will be in touch shortly.'); this.reset();" style="margin-top: 2.5rem;">
+      <div class="na-form-grid">
+        <div class="na-form-field">
+          <label for="contact-name">Name</label>
+          <input type="text" id="contact-name" placeholder="Your full name" required>
+        </div>
+        <div class="na-form-field">
+          <label for="contact-email">Email</label>
+          <input type="email" id="contact-email" placeholder="you@example.com" required>
+        </div>
+        <div class="na-form-field">
+          <label for="contact-phone">Phone (optional)</label>
+          <input type="tel" id="contact-phone" placeholder="(555) 123-4567">
+        </div>
+        <div class="na-form-field">
+          <label for="contact-subject">Subject</label>
+          <select id="contact-subject">
+            <option value="">Select a topic&hellip;</option>
+            <option>Product Question</option>
+            <option>Order Status</option>
+            <option>Return or Exchange</option>
+            <option>Custom / Bulk Order</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="na-form-field na-form-grid--full">
+          <label for="contact-message">Message</label>
+          <textarea id="contact-message" placeholder="How can we help?" required></textarea>
+        </div>
+      </div>
+      <div class="na-form-submit">
+        <button type="submit" class="na-btn na-btn--primary">Send Message</button>
+      </div>
+    </form>
+
+    <div class="na-contact-info">
+      <div class="na-contact-info__item">
+        <h3>Email</h3>
+        <p><a href="mailto:custservice@nativearchival.com">custservice@nativearchival.com</a></p>
+      </div>
+      <div class="na-contact-info__item">
+        <h3>Phone</h3>
+        <p><a href="tel:+13155024265">315-502-4265</a></p>
+      </div>
+      <div class="na-contact-info__item">
+        <h3>Mailing Address</h3>
+        <p>Pulp Packaging, Inc.<br>P.O. Box 475<br>Palmyra, NY 14522</p>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="na-policy-back">
+    <a href="#" onclick="switchView('homepage'); return false;">&larr; Back to Home</a>
+  </div>
+
+  <footer class="na-footer">
+    <div class="na-container">
+      <div class="na-footer__inner">
+        <div class="na-footer__brand">
+          <h3 class="na-header__logo" style="margin-bottom: 1rem;">Native Archival</h3>
+          <p>Professional archival and preservation products. Made in the USA.</p>
+          <div style="margin-top: 1.5rem;"><span class="na-kraft-line"></span></div>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Products</h4>
+          <ul class="na-footer__links">
+            <li><a href="#">Albums</a></li>
+            <li><a href="#">Photo Storage</a></li>
+            <li><a href="#">Print Preservers</a></li>
+            <li><a href="#">Portfolios</a></li>
+            <li><a href="#">Card Collectors</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Company</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('story'); return false;">Our Story</a></li>
+            <li><a href="#" onclick="switchView('blog'); return false;">Blog</a></li>
+            <li><a href="#" onclick="switchView('contact'); return false;">Contact</a></li>
+            <li><a href="#" onclick="switchView('wholesale'); return false;">Wholesale</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Resources</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('shipping'); return false;">Shipping &amp; Returns</a></li>
+            <li><a href="#" onclick="switchView('privacy'); return false;">Privacy Policy</a></li>
+            <li><a href="#" onclick="switchView('terms'); return false;">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Connect</h4>
+          <ul class="na-footer__links">
+            <li><a href="https://instagram.com/nativearchival" target="_blank">Instagram</a></li>
+            <li><a href="https://facebook.com/nativearchival" target="_blank">Facebook</a></li>
+          </ul>
+          <div class="na-footer__contact" style="margin-top: 2rem;">
+            <p>custservice@nativearchival.com</p>
+            <p>315-502-4265</p>
+            <p style="margin-top: 0.5rem;">P.O. Box 475</p>
+            <p>Palmyra, NY 14522</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="na-footer__bottom">
+      <div class="na-container">
+        <p>&copy; 2026 Native Archival. Made in the USA. Operated by Pulp Packaging, Inc.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ============================================================
+     WHOLESALE
+     ============================================================ -->
+<div class="na-preview-view" id="view-wholesale">
+
+  <header class="na-header">
+    <div class="na-container">
+      <div class="na-header__inner">
+        <div class="na-header__brand">
+          <a href="#" class="na-header__logo" onclick="switchView('homepage'); return false;">Native Archival</a>
+          <div class="na-header__social">
+            <a href="https://facebook.com/nativearchival" target="_blank" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="https://instagram.com/nativearchival" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          </div>
+        </div>
+        <nav class="na-header__nav">
+          <a href="#" onclick="switchView('homepage'); return false;">Home</a>
+          <a href="#" onclick="switchView('shop'); return false;">Shop</a>
+          <a href="#" onclick="switchView('blog'); return false;">Blog</a>
+          <a href="#" onclick="switchView('story'); return false;">Our Story</a>
+        </nav>
+        <div class="na-header__actions">
+          <a href="#" class="na-header__login" onclick="switchView('login'); return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+            <span class="na-header__login-text">Login</span>
+          </a>
+          <a href="#" class="na-header__cart">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" /></svg>
+            <span class="na-header__cart-count">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="na-policy-hero">
+    <div class="na-container">
+      <span class="na-kraft-line na-kraft-line--center" style="margin-bottom: 1.5rem;"></span>
+      <span class="na-policy-hero__eyebrow">For Businesses</span>
+      <h1 class="na-policy-hero__title">Wholesale Inquiries</h1>
+      <p class="na-policy-hero__updated">Factory-direct pricing for retailers, studios &amp; organizations</p>
+    </div>
+  </div>
+
+  <div class="na-policy-body">
+
+    <p>Native Archival products are manufactured by Pulp Packaging, Inc. in our Palmyra, New York factory. We offer wholesale pricing for retailers, photography studios, museums, libraries, and other organizations that need archival-quality products in volume.</p>
+
+    <div class="na-policy-callout" style="margin-top: 2rem;">
+      <p><strong>Why wholesale with Native Archival?</strong></p>
+      <p>Factory-direct pricing &mdash; no middlemen. Custom branding and packaging options available. Made in the USA with archival-grade, acid-free materials. Flexible minimums for qualifying accounts.</p>
+    </div>
+
+    <h2>Request Wholesale Information</h2>
+    <p>Tell us about your business and the products you&rsquo;re interested in. We&rsquo;ll follow up with pricing, minimums, and next steps.</p>
+
+    <form onsubmit="event.preventDefault(); alert('Thank you for your wholesale inquiry! Our team will be in touch within 2 business days.'); this.reset();" style="margin-top: 2rem;">
+      <div class="na-form-grid">
+        <div class="na-form-field">
+          <label for="ws-name">Contact Name</label>
+          <input type="text" id="ws-name" placeholder="Your full name" required>
+        </div>
+        <div class="na-form-field">
+          <label for="ws-email">Email</label>
+          <input type="email" id="ws-email" placeholder="you@yourbusiness.com" required>
+        </div>
+        <div class="na-form-field">
+          <label for="ws-company">Business / Organization Name</label>
+          <input type="text" id="ws-company" placeholder="Your company name" required>
+        </div>
+        <div class="na-form-field">
+          <label for="ws-phone">Phone</label>
+          <input type="tel" id="ws-phone" placeholder="(555) 123-4567">
+        </div>
+        <div class="na-form-field">
+          <label for="ws-type">Business Type</label>
+          <select id="ws-type">
+            <option value="">Select your business type&hellip;</option>
+            <option>Retail Store</option>
+            <option>Photography Studio</option>
+            <option>Museum / Library / Archive</option>
+            <option>School / University</option>
+            <option>Corporate / Enterprise</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="na-form-field">
+          <label for="ws-products">Products of Interest</label>
+          <select id="ws-products">
+            <option value="">Select a product category&hellip;</option>
+            <option>Albums</option>
+            <option>Photo Storage</option>
+            <option>Print Preservers</option>
+            <option>Portfolios</option>
+            <option>Card Collectors</option>
+            <option>Custom Packaging</option>
+            <option>Multiple / All Categories</option>
+          </select>
+        </div>
+        <div class="na-form-field na-form-grid--full">
+          <label for="ws-message">Tell Us More</label>
+          <textarea id="ws-message" placeholder="Estimated quantities, specific products, custom requirements, or any questions you have&hellip;"></textarea>
+        </div>
+      </div>
+      <div class="na-form-submit">
+        <button type="submit" class="na-btn na-btn--primary">Submit Inquiry</button>
+      </div>
+    </form>
+
+  </div>
+
+  <div class="na-policy-back">
+    <a href="#" onclick="switchView('homepage'); return false;">&larr; Back to Home</a>
+  </div>
+
+  <footer class="na-footer">
+    <div class="na-container">
+      <div class="na-footer__inner">
+        <div class="na-footer__brand">
+          <h3 class="na-header__logo" style="margin-bottom: 1rem;">Native Archival</h3>
+          <p>Professional archival and preservation products. Made in the USA.</p>
+          <div style="margin-top: 1.5rem;"><span class="na-kraft-line"></span></div>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Products</h4>
+          <ul class="na-footer__links">
+            <li><a href="#">Albums</a></li>
+            <li><a href="#">Photo Storage</a></li>
+            <li><a href="#">Print Preservers</a></li>
+            <li><a href="#">Portfolios</a></li>
+            <li><a href="#">Card Collectors</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Company</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('story'); return false;">Our Story</a></li>
+            <li><a href="#" onclick="switchView('blog'); return false;">Blog</a></li>
+            <li><a href="#" onclick="switchView('contact'); return false;">Contact</a></li>
+            <li><a href="#" onclick="switchView('wholesale'); return false;">Wholesale</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Resources</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('shipping'); return false;">Shipping &amp; Returns</a></li>
+            <li><a href="#" onclick="switchView('privacy'); return false;">Privacy Policy</a></li>
+            <li><a href="#" onclick="switchView('terms'); return false;">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Connect</h4>
+          <ul class="na-footer__links">
+            <li><a href="https://instagram.com/nativearchival" target="_blank">Instagram</a></li>
+            <li><a href="https://facebook.com/nativearchival" target="_blank">Facebook</a></li>
+          </ul>
+          <div class="na-footer__contact" style="margin-top: 2rem;">
+            <p>custservice@nativearchival.com</p>
+            <p>315-502-4265</p>
+            <p style="margin-top: 0.5rem;">P.O. Box 475</p>
+            <p>Palmyra, NY 14522</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="na-footer__bottom">
+      <div class="na-container">
+        <p>&copy; 2026 Native Archival. Made in the USA. Operated by Pulp Packaging, Inc.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<!-- ============================================================
+     PRODUCT VIEW (dynamic, populated by JS)
+     ============================================================ -->
+<div class="na-preview-view" id="view-product">
+
+  <header class="na-header">
+    <div class="na-container">
+      <div class="na-header__inner">
+        <div class="na-header__brand">
+          <a href="#" class="na-header__logo" onclick="switchView('homepage'); return false;">Native Archival</a>
+          <div class="na-header__social">
+            <a href="https://facebook.com/nativearchival" target="_blank" aria-label="Facebook"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+            <a href="https://instagram.com/nativearchival" target="_blank" aria-label="Instagram"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          </div>
+        </div>
+        <nav class="na-header__nav">
+          <a href="#" onclick="switchView('homepage'); return false;">Home</a>
+          <a href="#" onclick="switchView('shop'); return false;">Shop</a>
+          <a href="#" onclick="switchView('blog'); return false;">Blog</a>
+          <a href="#" onclick="switchView('story'); return false;">Our Story</a>
+        </nav>
+        <div class="na-header__actions">
+          <a href="#" class="na-header__login" onclick="switchView('login'); return false;">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" /></svg>
+            <span class="na-header__login-text">Login</span>
+          </a>
+          <a href="#" class="na-header__cart">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 10-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 01-1.12-1.243l1.264-12A1.125 1.125 0 015.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z" /></svg>
+            <span class="na-header__cart-count">0</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Breadcrumb -->
+  <div class="na-product-breadcrumb">
+    <div class="na-container">
+      <a href="#" onclick="switchView('homepage'); return false;">Home</a>
+      <span class="na-product-breadcrumb__sep">/</span>
+      <a href="#" onclick="switchView('shop'); return false;">Shop</a>
+      <span class="na-product-breadcrumb__sep">/</span>
+      <span class="na-product-breadcrumb__current" id="product-breadcrumb-name"></span>
+    </div>
+  </div>
+
+  <!-- Product -->
+  <section class="na-single-product">
+    <div class="na-container">
+      <div class="na-single-product__layout">
+        <div>
+          <div class="na-single-product__main-image" id="product-main-image"></div>
+          <div class="na-single-product__thumbs" id="product-thumbs"></div>
+        </div>
+        <div>
+          <p class="na-single-product__category" id="product-category"></p>
+          <h1 class="na-single-product__title" id="product-title"></h1>
+          <div class="na-single-product__price" id="product-price"></div>
+          <div class="na-single-product__short-desc" id="product-desc"></div>
+          <span class="na-kraft-line" style="width: 3rem; margin: 1.5rem 0;"></span>
+          <div class="na-single-product__actions">
+            <input type="number" class="na-single-product__qty" value="1" min="1">
+            <a href="#" class="na-btn na-btn--primary" id="product-add-to-cart">Add to Cart</a>
+          </div>
+          <div class="na-single-product__trust">
+            <div class="na-single-product__trust-item"><span class="na-hero__trust-dot"></span><span>Made in the USA</span></div>
+            <div class="na-single-product__trust-item"><span class="na-hero__trust-dot"></span><span>Acid-Free &amp; Archival</span></div>
+            <div class="na-single-product__trust-item"><span class="na-hero__trust-dot"></span><span>Direct-to-Consumer Pricing</span></div>
+          </div>
+          <p class="na-single-product__meta" id="product-sku"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Product Tabs -->
+  <section class="na-product-tabs">
+    <div class="na-container">
+      <div class="na-product-tabs__nav">
+        <button class="na-product-tabs__btn na-product-tabs__btn--active" onclick="showProductTab('description')">Description</button>
+        <button class="na-product-tabs__btn" onclick="showProductTab('details')">Details</button>
+      </div>
+      <div class="na-product-tabs__content">
+        <div class="na-product-tabs__panel na-product-tabs__panel--active" id="ptab-description">
+          <div class="na-product-tabs__body" id="product-full-desc"></div>
+        </div>
+        <div class="na-product-tabs__panel" id="ptab-details">
+          <table class="na-product-tabs__table" id="product-attributes"></table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Products -->
+  <section class="na-section na-section--ivory-dark">
+    <div class="na-container">
+      <div class="na-section__header">
+        <div>
+          <span class="na-kraft-line" style="margin-bottom: 1rem;"></span>
+          <h2 style="font-size: 1.5rem; font-weight: 300; text-transform: uppercase; letter-spacing: var(--na-tracking-widest);">You May Also Like</h2>
+        </div>
+        <a href="#" class="na-section__link" onclick="switchView('shop'); return false;">View All &rarr;</a>
+      </div>
+      <div class="na-products-grid" id="product-related"></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="na-cta">
+    <div class="na-container">
+      <div class="na-cta__inner">
+        <span class="na-kraft-line na-kraft-line--center" style="margin-bottom: 2rem;"></span>
+        <h2>Protecting Your Memories Starts Here.</h2>
+        <p class="na-cta__subtitle">Join thousands of collectors, photographers, and archivists.</p>
+        <div class="na-cta__form">
+          <input type="email" placeholder="YOUR EMAIL ADDRESS" class="na-cta__input">
+          <button class="na-btn na-btn--primary">Subscribe</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="na-footer">
+    <div class="na-container">
+      <div class="na-footer__inner">
+        <div class="na-footer__brand">
+          <h3 class="na-header__logo" style="margin-bottom: 1rem;">Native Archival</h3>
+          <p>Professional archival and preservation products. Made in the USA.</p>
+          <div style="margin-top: 1.5rem;"><span class="na-kraft-line"></span></div>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Products</h4>
+          <ul class="na-footer__links">
+            <li><a href="#">Albums</a></li>
+            <li><a href="#">Photo Storage</a></li>
+            <li><a href="#">Print Preservers</a></li>
+            <li><a href="#">Portfolios</a></li>
+            <li><a href="#">Card Collectors</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Company</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('story'); return false;">Our Story</a></li>
+            <li><a href="#" onclick="switchView('blog'); return false;">Blog</a></li>
+            <li><a href="#" onclick="switchView('contact'); return false;">Contact</a></li>
+            <li><a href="#" onclick="switchView('wholesale'); return false;">Wholesale</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Resources</h4>
+          <ul class="na-footer__links">
+            <li><a href="#" onclick="switchView('shipping'); return false;">Shipping &amp; Returns</a></li>
+            <li><a href="#" onclick="switchView('privacy'); return false;">Privacy Policy</a></li>
+            <li><a href="#" onclick="switchView('terms'); return false;">Terms of Service</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="na-footer__heading">Connect</h4>
+          <ul class="na-footer__links">
+            <li><a href="https://instagram.com/nativearchival" target="_blank">Instagram</a></li>
+            <li><a href="https://facebook.com/nativearchival" target="_blank">Facebook</a></li>
+          </ul>
+          <div class="na-footer__contact" style="margin-top: 2rem;">
+            <p>custservice@nativearchival.com</p>
+            <p>315-502-4265</p>
+            <p style="margin-top: 0.5rem;">P.O. Box 475</p>
+            <p>Palmyra, NY 14522</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="na-footer__bottom">
+      <div class="na-container">
+        <p>&copy; 2026 Native Archival. Made in the USA. Operated by Pulp Packaging, Inc.</p>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // WooCommerce REST API
+  var API_BASE = 'https://nativearchival.com/wp-json/wc/v3';
+  var CK = 'ck_1fd2d7a8bd66391154cee479b72b45af12a8b852';
+  var CS = 'cs_e5a7353d93f0cc34f43fdb7f59d7fc17477e7800';
+
+  var allProducts = [];
+  var allCategories = [];
+
+  function apiUrl(endpoint, params) {
+    params = params || {};
+    var url = new URL(API_BASE + endpoint);
+    url.searchParams.set('consumer_key', CK);
+    url.searchParams.set('consumer_secret', CS);
+    for (var k in params) url.searchParams.set(k, params[k]);
+    return url.toString();
+  }
+
+  function productCard(p) {
+    var img = p.images && p.images.length > 0
+      ? '<img src="' + p.images[0].src + '" alt="' + esc(p.name) + '" loading="lazy">'
+      : '<span class="na-product-card__image-placeholder">' + initials(p.name) + '</span>';
+    var price = p.price ? '$' + parseFloat(p.price).toFixed(2) : '';
+    var saleHtml = p.on_sale && p.regular_price
+      ? '<del style="opacity:0.6;">$' + parseFloat(p.regular_price).toFixed(2) + '</del> $' + parseFloat(p.sale_price || p.price).toFixed(2)
+      : price;
+    return '<div class="na-product-card">' +
+      '<a href="#" onclick="showProduct(' + p.id + '); return false;"><div class="na-product-card__image">' + img + '<span class="na-product-card__hover-line"></span></div></a>' +
+      '<h3 class="na-product-card__name"><a href="#" onclick="showProduct(' + p.id + '); return false;">' + esc(p.name) + '</a></h3>' +
+      '<p class="na-product-card__price">' + saleHtml + '</p>' +
+      '<a href="#" onclick="showProduct(' + p.id + '); return false;" class="na-btn na-btn--outline-dark na-btn--small">View Product</a></div>';
+  }
+
+  function initials(name) { return name.split(' ').slice(0, 3).map(function(w) { return w.charAt(0); }).join('').toUpperCase(); }
+
+  function esc(str) { var d = document.createElement('div'); d.textContent = str; return d.innerHTML; }
+
+  function filterByCategory(categoryName) {
+    var filtered = categoryName === 'all' ? allProducts : allProducts.filter(function(p) {
+      return p.categories && p.categories.some(function(c) { return c.name.toLowerCase() === categoryName.toLowerCase(); });
+    });
+    var grid = document.getElementById('all-products');
+    grid.innerHTML = filtered.length > 0 ? filtered.map(productCard).join('') : '<div class="na-loading" style="grid-column:1/-1;"><p class="na-loading__text">No products in this category.</p></div>';
+    var countEl = document.getElementById('shop-count');
+    countEl.textContent = categoryName === 'all' ? filtered.length + ' products' : filtered.length + ' products in ' + categoryName;
+    var shopTitle = document.querySelector('#view-shop .na-shop-header h1');
+    if (shopTitle) shopTitle.textContent = categoryName === 'all' ? 'Shop' : categoryName;
+    document.querySelectorAll('.na-filter-btn').forEach(function(btn) {
+      btn.classList.toggle('active', btn.getAttribute('data-cat') === categoryName);
+    });
+  }
+
+  window.shopByCategory = function(categoryName) {
+    switchView('shop');
+    setTimeout(function() { filterByCategory(categoryName); }, 50);
+  };
+
+  window.filterShop = function(categoryName) { filterByCategory(categoryName); };
+
+  async function loadProducts() {
+    try {
+      var resp = await fetch(apiUrl('/products', { per_page: '100', status: 'publish' }));
+      if (!resp.ok) throw new Error('API error: ' + resp.status);
+      allProducts = await resp.json();
+      var featured = allProducts.filter(function(p) { return p.featured; });
+      var displayFeatured = featured.length >= 4 ? featured.slice(0, 4) : allProducts.slice(0, 4);
+      document.getElementById('featured-products').innerHTML = displayFeatured.map(productCard).join('');
+      document.getElementById('all-products').innerHTML = allProducts.map(productCard).join('');
+      document.getElementById('shop-count').textContent = allProducts.length + ' products';
+    } catch (err) {
+      console.error('Failed to load products:', err);
+      var msg = '<div class="na-loading" style="grid-column:1/-1;"><p class="na-loading__text">Could not load products. CORS may be blocking the request &mdash; try opening this file on a local server, or the products will appear when this theme is installed on WordPress.</p></div>';
+      document.getElementById('featured-products').innerHTML = msg;
+      document.getElementById('all-products').innerHTML = msg;
+    }
+  }
+
+  async function loadCategories() {
+    var fallback = [
+      { name: 'Albums', slug: 'albums', description: 'Archival photo albums for lasting preservation.', count: 0 },
+      { name: 'Photo Storage', slug: 'photo-storage', description: 'Acid-free sleeves and storage boxes.', count: 0 },
+      { name: 'Print Preservers', slug: 'print-preservers', description: 'Protect prints from UV, moisture, and time.', count: 0 },
+      { name: 'Portfolios', slug: 'portfolios', description: 'Professional presentation portfolios.', count: 0 },
+      { name: 'Card Collectors', slug: 'card-collectors', description: 'Archival sleeves and cases for cards.', count: 0 }
+    ];
+    try {
+      var resp = await fetch(apiUrl('/products/categories', { per_page: '50' }));
+      if (!resp.ok) throw new Error('API error');
+      var cats = await resp.json();
+      var filtered = cats.filter(function(c) { return c.slug !== 'uncategorized' && c.count > 0; });
+      allCategories = filtered.length > 0 ? filtered : fallback;
+    } catch (e) { allCategories = fallback; }
+    renderCategories(allCategories);
+    renderFilterBar(allCategories);
+  }
+
+  function renderCategories(cats) {
+    document.getElementById('categories-grid').innerHTML = cats.map(function(c) {
+      return '<a href="#" class="na-category-card" onclick="shopByCategory(\'' + esc(c.name).replace(/'/g, "\\'") + '\'); return false;">' +
+        '<div class="na-category-card__line"></div><h3 class="na-category-card__name">' + esc(c.name) + '</h3>' +
+        '<p class="na-category-card__desc">' + esc(c.description || '') + '</p>' +
+        (c.count ? '<p class="na-category-card__count">' + c.count + ' products</p>' : '') + '</a>';
+    }).join('');
+  }
+
+  function renderFilterBar(cats) {
+    var bar = document.getElementById('shop-filter-bar');
+    if (!bar) return;
+    var html = '<span class="na-filter-label">Filter:</span><button class="na-filter-btn active" data-cat="all" onclick="filterShop(\'all\')">All Products</button>';
+    cats.forEach(function(c) {
+      html += '<button class="na-filter-btn" data-cat="' + esc(c.name) + '" onclick="filterShop(\'' + esc(c.name).replace(/'/g, "\\'") + '\')">' + esc(c.name) + '</button>';
+    });
+    bar.innerHTML = html;
+  }
+
+  // Blog posts
+  var blogPosts = {
+    'store-photos': {
+      title: 'How to Store Photos So They Last 100 Years',
+      date: 'March 28, 2026',
+      author: 'Native Archival',
+      content: '<p>You probably have a box somewhere. Maybe it\'s in the closet, maybe it\'s in the basement. Old photos. Loose prints from the 70s, school pictures, someone\'s wedding, a face you almost can\'t remember. That box is the entire reason archival storage exists.</p>' +
+        '<p>Photographs are surprisingly fragile. The paper fades. The colors shift. Acids in cheap materials eat through the surface over decades. And yet, when stored correctly, photographs can last well over a century.</p>' +
+        '<h2>Why Photographs Deteriorate</h2>' +
+        '<p><strong>Acid damage</strong> is the most common culprit. Many everyday materials \u2014 cardboard, paper, most plastic sleeves \u2014 are slightly acidic. Over time, that acidity migrates into your photographs, breaking down the paper fibers and image layers.</p>' +
+        '<p><strong>Light exposure</strong> causes fading and color shifts, particularly in color photographs. UV light is especially damaging.</p>' +
+        '<p><strong>Humidity and temperature fluctuations</strong> cause the paper and emulsion layers to expand and contract at different rates, leading to cracking, warping, and separation.</p>' +
+        '<h2>The Foundation: What \u201CArchival Quality\u201D Actually Means</h2>' +
+        '<p><strong>Acid-free:</strong> A pH of 7.0 or higher. Neutral or slightly alkaline materials don\'t attack the photograph\'s chemistry.</p>' +
+        '<p><strong>Lignin-free:</strong> Lignin is a natural compound in wood that breaks down into acids over time. Archival paper and board must be lignin-free.</p>' +
+        '<p><strong>PAT-certified:</strong> The Photographic Activity Test (ISO 18916) is the gold standard.</p>' +
+        '<h2>Step-by-Step: How to Store Your Photos</h2>' +
+        '<p><strong>1. Handle with clean, dry hands</strong> \u2014 or better yet, clean cotton gloves.</p>' +
+        '<p><strong>2. Choose acid-free sleeves</strong> for individual protection.</p>' +
+        '<p><strong>3. Use archival storage boxes</strong> designed to maintain a stable, neutral environment.</p>' +
+        '<p><strong>4. Store in a cool, dry, dark location</strong> \u2014 ideally between 65\u201370\u00B0F with 30\u201340% relative humidity.</p>' +
+        '<blockquote>The difference between a photo that survives 100 years and one that doesn\'t comes down to a few simple choices made at storage time.</blockquote>' +
+        '<p>Every photograph tells a story that can\'t be retold once it\'s gone. The good news is that protecting them doesn\'t require anything complicated \u2014 just the right materials and a little intention.</p>'
+    },
+    'acid-free': {
+      title: 'What Does Acid-Free Actually Mean?',
+      date: 'Coming Soon',
+      author: 'Native Archival',
+      content: '<p>Walk into any craft store and you\'ll see \u201Cacid-free\u201D printed on everything. But what does it actually mean?</p>' +
+        '<h2>The Chemistry Behind Acidity</h2>' +
+        '<p>Acidity is measured on the pH scale, from 0 (extremely acidic) to 14 (extremely alkaline), with 7.0 being neutral. Most everyday paper falls in the 4.0\u20136.0 range \u2014 mildly acidic, but enough to cause real damage over time.</p>' +
+        '<h2>Why It Matters for Preservation</h2>' +
+        '<p>True acid-free materials have a pH of 7.0 or higher. Some are \u201Cbuffered\u201D with calcium carbonate that actively neutralizes any acids that develop over time.</p>' +
+        '<h2>What to Look For</h2>' +
+        '<p>When shopping for archival materials, look for: acid-free (pH 7.0+), lignin-free, buffered with calcium carbonate, and PAT-tested (ISO 18916).</p>'
+    },
+    'card-collector': {
+      title: 'Card Collector\'s Complete Guide to Archival Storage',
+      date: 'Coming Soon',
+      author: 'Native Archival',
+      content: '<p>Whether you\'re protecting a vintage Mickey Mantle rookie card or a modern Pok\u00E9mon graded slab, proper storage isn\'t optional.</p>' +
+        '<h2>Why Cards Need Archival Protection</h2>' +
+        '<p>Trading cards face the same enemies as photographs: acid migration, UV fading, humidity warping, and temperature fluctuations.</p>' +
+        '<h2>Choosing the Right Storage</h2>' +
+        '<p><strong>For raw cards:</strong> Acid-free penny sleeves, then toploaders for valuable pieces.</p>' +
+        '<p><strong>For graded slabs:</strong> Storage boxes that support the slab on its edges, preventing pressure on the case.</p>' +
+        '<h2>Environmental Controls</h2>' +
+        '<p>Keep your collection at 65\u201370\u00B0F, 30\u201340% relative humidity, and no direct sunlight.</p>'
+    }
+  };
+
+  window.showBlogPost = function(slug) {
+    var post = blogPosts[slug];
+    if (!post) return;
+    document.getElementById('blogpost-content').innerHTML =
+      '<span class="na-kraft-line" style="width: 3rem; margin-bottom: 1.5rem;"></span>' +
+      '<h1 style="font-family: var(--na-font-display); font-size: 2rem; font-weight: 400; color: var(--na-charcoal); margin-bottom: 1rem; line-height: 1.3;">' + esc(post.title) + '</h1>' +
+      '<p style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-silver); margin-bottom: 3rem;">' + esc(post.date) + ' &mdash; ' + esc(post.author) + '</p>' +
+      '<div class="na-blogpost-body">' + post.content + '</div>' +
+      '<div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--na-ivory-dark);">' +
+        '<a href="#" onclick="switchView(\'blog\'); return false;" style="font-size: 0.6875rem; text-transform: uppercase; letter-spacing: var(--na-tracking-widest); color: var(--na-kraft);">&larr; Back to all posts</a></div>';
+    document.querySelectorAll('.na-preview-view').forEach(function(v) { v.classList.remove('active'); });
+    document.getElementById('view-blogpost').classList.add('active');
+    window.scrollTo(0, 0);
+  };
+
+  // ── Product View ──────────────────────────────────────────
+  window.showProduct = function(productId) {
+    var p = allProducts.find(function(prod) { return prod.id === productId; });
+    if (!p) return;
+
+    // Breadcrumb
+    var bcName = document.getElementById('product-breadcrumb-name');
+    if (bcName) bcName.textContent = p.name;
+
+    // Main image
+    var mainImg = document.getElementById('product-main-image');
+    if (mainImg) {
+      if (p.images && p.images.length > 0) {
+        mainImg.innerHTML = '<img src="' + esc(p.images[0].src) + '" alt="' + esc(p.name) + '" class="na-single-product__img">';
+      } else {
+        mainImg.innerHTML = '<div class="na-single-product__placeholder"><span>' + initials(p.name) + '</span></div>';
+      }
+    }
+
+    // Thumbnails
+    var thumbsEl = document.getElementById('product-thumbs');
+    if (thumbsEl) {
+      if (p.images && p.images.length > 1) {
+        thumbsEl.innerHTML = p.images.map(function(img, i) {
+          return '<button class="na-single-product__thumb' + (i === 0 ? ' na-single-product__thumb--active' : '') + '" onclick="switchProductImage(this, \'' + esc(img.src) + '\')">' +
+            '<img src="' + esc(img.src) + '" alt="' + esc(p.name) + ' thumbnail">' +
+            '</button>';
+        }).join('');
+        thumbsEl.style.display = '';
+      } else {
+        thumbsEl.innerHTML = '';
+        thumbsEl.style.display = 'none';
+      }
+    }
+
+    // Category
+    var catEl = document.getElementById('product-category');
+    if (catEl) {
+      catEl.textContent = (p.categories && p.categories.length > 0) ? p.categories[0].name : '';
+      catEl.style.display = (p.categories && p.categories.length > 0) ? '' : 'none';
+    }
+
+    // Title
+    var titleEl = document.getElementById('product-title');
+    if (titleEl) titleEl.textContent = p.name;
+
+    // Price
+    var priceEl = document.getElementById('product-price');
+    if (priceEl) {
+      if (p.on_sale && p.regular_price) {
+        priceEl.innerHTML = '<del style="opacity:0.6;margin-right:0.5rem;">$' + parseFloat(p.regular_price).toFixed(2) + '</del> $' + parseFloat(p.sale_price || p.price).toFixed(2);
+      } else if (p.price) {
+        priceEl.innerHTML = '$' + parseFloat(p.price).toFixed(2);
+      } else {
+        priceEl.innerHTML = '';
+      }
+    }
+
+    // Short description
+    var descEl = document.getElementById('product-desc');
+    if (descEl) {
+      if (p.short_description) {
+        descEl.innerHTML = p.short_description;
+        descEl.style.display = '';
+      } else {
+        descEl.innerHTML = '';
+        descEl.style.display = 'none';
+      }
+    }
+
+    // SKU
+    var skuEl = document.getElementById('product-sku');
+    if (skuEl) {
+      if (p.sku) {
+        skuEl.innerHTML = '<span>SKU:</span> ' + esc(p.sku);
+        skuEl.style.display = '';
+      } else {
+        skuEl.style.display = 'none';
+      }
+    }
+
+    // Full description tab
+    var fullDescEl = document.getElementById('product-full-desc');
+    if (fullDescEl) fullDescEl.innerHTML = p.description || '<p>No description available.</p>';
+
+    // Attributes tab
+    var attrEl = document.getElementById('product-attributes');
+    if (attrEl) {
+      if (p.attributes && p.attributes.length > 0) {
+        attrEl.innerHTML = p.attributes.map(function(a) {
+          var vals = a.options ? a.options.join(', ') : '';
+          return '<tr><th>' + esc(a.name) + '</th><td>' + esc(vals) + '</td></tr>';
+        }).join('');
+        // Show the details tab button
+        var detailsBtn = document.querySelector('.na-product-tabs__btn[onclick*="details"]');
+        if (detailsBtn) detailsBtn.style.display = '';
+      } else {
+        attrEl.innerHTML = '';
+        var detailsBtn = document.querySelector('.na-product-tabs__btn[onclick*="details"]');
+        if (detailsBtn) detailsBtn.style.display = 'none';
+      }
+    }
+
+    // Reset tabs to Description
+    showProductTab('description');
+
+    // Add to cart link
+    var cartBtn = document.getElementById('product-add-to-cart');
+    if (cartBtn) {
+      cartBtn.href = p.permalink || '#';
+      if (p.permalink) cartBtn.target = '_blank';
+    }
+
+    // Related products (random 4 from same category, excluding current)
+    var related = [];
+    if (p.categories && p.categories.length > 0) {
+      var catName = p.categories[0].name;
+      related = allProducts.filter(function(rp) {
+        return rp.id !== p.id && rp.categories && rp.categories.some(function(c) { return c.name === catName; });
+      });
+    }
+    if (related.length < 4) {
+      var extra = allProducts.filter(function(rp) {
+        return rp.id !== p.id && !related.some(function(r) { return r.id === rp.id; });
+      });
+      related = related.concat(extra);
+    }
+    related = related.slice(0, 4);
+    var relatedEl = document.getElementById('product-related');
+    if (relatedEl) relatedEl.innerHTML = related.map(productCard).join('');
+
+    // Switch view
+    document.querySelectorAll('.na-preview-view').forEach(function(v) { v.classList.remove('active'); });
+    document.getElementById('view-product').classList.add('active');
+    window.scrollTo(0, 0);
+  };
+
+  window.switchProductImage = function(btn, src) {
+    var main = document.querySelector('#product-main-image .na-single-product__img');
+    if (main) main.src = src;
+    document.querySelectorAll('.na-single-product__thumb').forEach(function(t) { t.classList.remove('na-single-product__thumb--active'); });
+    btn.classList.add('na-single-product__thumb--active');
+  };
+
+  window.showProductTab = function(tabName) {
+    document.querySelectorAll('.na-product-tabs__btn').forEach(function(b) { b.classList.remove('na-product-tabs__btn--active'); });
+    document.querySelectorAll('.na-product-tabs__panel').forEach(function(p) { p.classList.remove('na-product-tabs__panel--active'); });
+    var activeBtn = document.querySelector('.na-product-tabs__btn[onclick*="' + tabName + '"]');
+    if (activeBtn) activeBtn.classList.add('na-product-tabs__btn--active');
+    var panel = document.getElementById('ptab-' + tabName);
+    if (panel) panel.classList.add('na-product-tabs__panel--active');
+  };
+
+  window.switchView = function(viewName) {
+    document.querySelectorAll('.na-preview-view').forEach(function(v) { v.classList.remove('active'); });
+    var view = document.getElementById('view-' + viewName);
+    if (view) view.classList.add('active');
+    window.scrollTo(0, 0);
+  };
+
+  loadProducts();
+  loadCategories();
+})();
+</script>
+</body>
+</html>
